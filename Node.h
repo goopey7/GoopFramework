@@ -27,7 +27,6 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		void update(const float dt);
 		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
-		virtual unsigned int getCategory() const;
 
 	private:
 		std::vector<NodePtr> children;

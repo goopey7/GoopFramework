@@ -32,11 +32,13 @@ void Game::initWindow()
 Game::Game()
 { 
 	initWindow();
+	world = new World(*window);
 }
 
 Game::~Game()
 {
 	delete window;
+	delete world;
 }
 
 void Game::handleEvents()
@@ -51,15 +53,18 @@ void Game::handleEvents()
 
 void Game::update(const float dt)
 {
+	world->update(dt);
 }
 
 void Game::fixedUpdate(const float dt)
 {
+	world->fixedUpdate(dt);
 }
 
 void Game::render()
 {
 	window->clear();
+	world->draw();
 	window->display();
 }
 

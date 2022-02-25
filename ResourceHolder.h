@@ -17,7 +17,8 @@ namespace Textures
 	enum ID
 	{
 		// insert texture IDs here
-		tux,
+		Tux,
+		Terminal,
 	};
 }
 namespace Fonts
