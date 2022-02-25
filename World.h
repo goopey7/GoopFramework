@@ -10,6 +10,7 @@
 
 #include "SpriteNode.h"
 #include "Tux.h"
+#include "CommandQueue.h"
 
 class World : private sf::NonCopyable
 {
@@ -20,6 +21,7 @@ class World : private sf::NonCopyable
 		void update(const float dt);
 		void fixedUpdate(const float dt);
 		void draw();
+		CommandQueue& getCommandQueue();
 
 	private:
 		void loadTextures();
@@ -44,5 +46,7 @@ class World : private sf::NonCopyable
 		std::array<Node*, layerCount> worldLayers;
 
 		sf::Vector2f spawnPos;
+
+		CommandQueue commandQueue;
 };
 

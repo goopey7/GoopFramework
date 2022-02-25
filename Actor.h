@@ -13,6 +13,7 @@ class Actor : public Node
 		virtual void updateCurrent(const float dt) override;
 		virtual void fixedUpateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
+		virtual unsigned int getCategory() const override;
 
 	protected:
 		sf::Sprite sprite;

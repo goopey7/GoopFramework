@@ -18,3 +18,28 @@ void Tux::fixedUpateCurrent(const float dt)
 {
 }
 
+sf::Vector2f Tux::getVelocity() const
+{
+	return velocity;
+}
+
+void Tux::setVelocity(sf::Vector2f v)
+{
+	velocity = v;
+}
+
+void Tux::setVelocityX(float vx)
+{
+	velocity.x = vx;
+}
+
+void Tux::setVelocityY(float vy)
+{
+	velocity.y = vy;
+}
+
+unsigned int Tux::getCategory() const
+{
+	return Category::PlayerCharacter;
+}
+

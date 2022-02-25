@@ -50,6 +50,10 @@ void World::update(const float dt)
 
 void World::fixedUpdate(const float dt)
 {
+	// Broadcast commands to sceneGraph
+	while(!commandQueue.isEmpty())
+		worldGraph.onCommand(commandQueue.pop(),dt);
+
 	worldGraph.fixedUpdate(dt);
 }
 
@@ -60,5 +64,10 @@ void World::draw()
 
 World::~World()
 {
+}
+
+CommandQueue& World::getCommandQueue()
+{
+	return commandQueue;
 }
 

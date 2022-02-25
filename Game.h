@@ -12,6 +12,7 @@
 #include <SFML/Window.hpp>
 
 #include "World.h"
+#include "PlayerController.h"
 
 // Game/App wrapper
 class Game
@@ -35,5 +36,6 @@ class Game
 		const int TicksPerSec = 60;
 
 		World* world;
+		PlayerController pc;
 };
 

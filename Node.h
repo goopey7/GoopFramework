@@ -12,6 +12,8 @@
 #include <cassert>
 
 #include <SFML/Graphics.hpp>
+#include "Category.h"
+#include "Command.h"
 
 // Nodes hold a ptr to their parent and smrt ptrs to all their children
 // this allows us to recursively traverse every entity in the game
@@ -27,6 +29,8 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		void update(const float dt);
 		sf::Transform getWorldTransform() const;
 		sf::Vector2f getWorldPosition() const;
+		virtual unsigned int getCategory() const;
+		void onCommand(const Command& command, const float dt);
 
 	private:
 		std::vector<NodePtr> children;

@@ -98,3 +98,22 @@ sf::Vector2f Node::getWorldPosition() const
 	return getWorldTransform() * sf::Vector2f();
 }
 
+unsigned int Node::getCategory() const
+{
+	return Category::None;
+}
+
+void Node::onCommand(const Command& command, const float dt)
+{
+	// Check if categories match using bitwise AND '&'
+	// if two bits in the same place match then we have a match in category
+	// and the action is intended for this node
+	// so it is executed
+	if(command.category & getCategory())
+		command.action(*this,dt);
+
+	// Broadcast command to all children
+	for(NodePtr& child : children)
+		child->onCommand(command,dt);
+}
+

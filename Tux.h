@@ -10,11 +10,16 @@ class Tux : public Actor
 
 		virtual void updateCurrent(const float dt) override;
 		virtual void fixedUpateCurrent(const float dt) override;
+		virtual unsigned int getCategory() const override;
+		sf::Vector2f getVelocity() const;
+		void setVelocity(sf::Vector2f v);
+		void setVelocityX(float vx);
+		void setVelocityY(float vy);
 
 	protected:
 
 	private:
-		sf::Vector2f velocity = {100.f,0.f};
+		sf::Vector2f velocity = {0.f,0.f};
 		
 };
 
