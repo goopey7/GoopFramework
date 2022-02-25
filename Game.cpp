@@ -32,9 +32,6 @@ void Game::initWindow()
 Game::Game()
 { 
 	initWindow();
-	th.load(Textures::tux,"art/tux.png");
-	testIMG.setTexture(th.get(Textures::tux));
-	testIMG.setPosition(100.f,100.f);
 }
 
 Game::~Game()
@@ -63,7 +60,6 @@ void Game::fixedUpdate(const float dt)
 void Game::render()
 {
 	window->clear();
-	window->draw(testIMG);
 	window->display();
 }
 
