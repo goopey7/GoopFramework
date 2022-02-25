@@ -11,6 +11,8 @@
 #include <SFML/Network.hpp>
 #include <SFML/Window.hpp>
 
+#include "ResourceHolder.h"
+
 // Game/App wrapper
 class Game
 {
@@ -31,5 +33,8 @@ class Game
 
 		// For FixedUpdate
 		const int TicksPerSec = 60;
+
+		TextureHolder th;
+		sf::Sprite testIMG;
 };
 

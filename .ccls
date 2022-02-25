@@ -1,2 +1,2 @@
-clang
+clang++
 -std=c++20

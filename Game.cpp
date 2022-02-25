@@ -17,9 +17,9 @@ void Game::initWindow()
 	{
 		windowSize = sf::VideoMode(800,600);
 		vSyncEnabled = false;
+		std::filesystem::create_directory("config");
 	}
 	ifs.close();
-	std::filesystem::create_directory("config");
 	std::ofstream ofs("config/window.cfg",std::ofstream::out);
 	ofs << title << '\n';
 	ofs << std::to_string(windowSize.width) << " " << std::to_string(windowSize.height) << '\n';
@@ -32,6 +32,9 @@ void Game::initWindow()
 Game::Game()
 { 
 	initWindow();
+	th.load(Textures::tux,"art/tux.png");
+	testIMG.setTexture(th.get(Textures::tux));
+	testIMG.setPosition(100.f,100.f);
 }
 
 Game::~Game()
@@ -60,7 +63,7 @@ void Game::fixedUpdate(const float dt)
 void Game::render()
 {
 	window->clear();
-
+	window->draw(testIMG);
 	window->display();
 }
 
