@@ -34,5 +34,8 @@ class PlayerController
 		std::map<Action,Command> pressedActions;
 		std::map<Action,Command> heldActions;
 		std::map<Action,Command> releasedActions;
+
+		const float playerSpeed = 500.f;
+
 };
 

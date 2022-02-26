@@ -61,17 +61,36 @@ struct TuxMover
 			case StopDir::None:
 			{
 				if(velocity.x != 0)
-					tux.setVelocityX(velocity.x * dt);
+					tux.setVelocityX(velocity.x);
 				if(velocity.y != 0)
-					tux.setVelocityY(velocity.y * dt);
+					tux.setVelocityY(velocity.y);
 
 				// keep velocity constant using 45 - 45 - 90 rule
-				if(velocity.x != 0 && velocity.y != 0)
+				if((tux.getVelocity().y != 0.f && tux.getVelocity().x != 0.f))
 				{
-					tux.setVelocity(velocity/sqrtf(2.f) * dt);
+					if(velocity.x != 0.f)
+						tux.setVelocityX(velocity.x/sqrtf(2.f));
+					else if(velocity.y != 0.f)
+						tux.setVelocityY(velocity.y/sqrtf(2.f));
 				}
+
+				if(fabs(tux.getVelocity().x) >= fabs(tux.getVelocity().y * sqrtf(2.f))
+						&& tux.getVelocity().y != 0.f)
+						tux.setVelocityX(tux.getVelocity().x/sqrtf(2.f));
+
+				if(fabs(tux.getVelocity().y) >= fabs(tux.getVelocity().x * sqrtf(2.f))
+						&& tux.getVelocity().x != 0.f)
+						tux.setVelocityY(tux.getVelocity().y/sqrtf(2.f));
 			}
+
 		}
+
+		if(dir==StopDir::Right || dir == StopDir::Left)
+			tux.setVelocityY(tux.getVelocity().y*sqrt(2.f));
+
+		if(dir==StopDir::Up || dir == StopDir::Down)
+			tux.setVelocityX(tux.getVelocity().x*sqrt(2.f));
+		std::cout << tux.getVelocity().x << ',' << tux.getVelocity().y << '\n';
 	}
 
 	sf::Vector2f velocity;
@@ -86,8 +105,6 @@ PlayerController::PlayerController()
 	keyBindings[sf::Keyboard::D] = MoveRight;
 	keyBindings[sf::Keyboard::P] = ShowPos;
 
-	const float playerSpeed = 3000.f;
-	
 	// Pressed Actions
 	pressedActions[MoveUp].action = derivedAction<Tux>(TuxMover(0.f,-playerSpeed));
 	pressedActions[MoveLeft].action = derivedAction<Tux>(TuxMover(-playerSpeed,0.f));
