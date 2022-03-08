@@ -6,8 +6,9 @@
 //Chapter 4 of SFML Game Development by Artur Moreira, Henrik V. Hansson, and Jan Haller
 //**************************************************************************************
 
-#include "../Tux.h"
 #include "CommandQueue.h"
+#include <SFML/Window.hpp>
+#include <map>
 
 class PlayerController
 {
@@ -19,14 +20,12 @@ class PlayerController
 
 		void handleEvent(const sf::Event& event, CommandQueue& commands);
 		void handleHeldInput(CommandQueue& commands);
+
 	protected:
 		std::map<sf::Keyboard::Key, bool> wasReleased;
 		std::map<sf::Keyboard::Key, unsigned int> keyBindings;
 		std::map<unsigned int,Command> pressedActions;
 		std::map<unsigned int,Command> heldActions;
 		std::map<unsigned int,Command> releasedActions;
-
-		const float playerSpeed = 500.f;
-
 };
 
