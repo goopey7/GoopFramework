@@ -12,26 +12,6 @@
 #include <memory>
 #include <map>
 
-namespace Textures
-{
-	enum ID
-	{
-		// insert texture IDs here
-		Tux,
-		Terminal,
-	};
-}
-namespace Fonts
-{
-	enum ID
-	{
-		// insert Font IDs here
-	};
-}
-
-// insert more enums for additional types here
-
-
 // holds resources in one place, in memory
 // taking advantage of smart ptrs for RAII
 // so no need to bother about new delete pairs
@@ -60,9 +40,7 @@ namespace sf
 	class Font;
 };
 
-// Typedefs to make code more readable for commonly used Resources
-typedef ResourceHolder<sf::Texture,Textures::ID> TextureHolder;
-typedef ResourceHolder<sf::Font,Fonts::ID> FontHolder;
+
 
 template<typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName)

@@ -4,6 +4,8 @@
 #include "ResourceHolder.h"
 #include "Node.h"
 
+typedef ResourceHolder<sf::Texture,unsigned int> TextureHolder;
+
 class Actor : public Node
 {
 	public:

@@ -9,8 +9,8 @@
 #pragma once
 
 #include "SpriteNode.h"
-#include "Tux.h"
 #include "CommandQueue.h"
+#include "ResourceHolder.h"
 
 class World : private sf::NonCopyable
 {
@@ -22,15 +22,9 @@ class World : private sf::NonCopyable
 		void fixedUpdate(const float dt);
 		void draw();
 		CommandQueue& getCommandQueue();
+		virtual void buildGraph();
 
-	private:
-		void loadTextures();
-		void buildGraph();
-		
-		sf::RenderWindow& window;
-
-		TextureHolder textures;
-		Node worldGraph;
+	protected:
 
 		// LayerCount will naturally return the number of layers before it
 		// enums start at 0
@@ -46,6 +40,11 @@ class World : private sf::NonCopyable
 		std::array<Node*, layerCount> worldLayers;
 
 		sf::Vector2f spawnPos;
+
+	private:
+		sf::RenderWindow& window;
+
+		Node worldGraph;
 
 		CommandQueue commandQueue;
 };
