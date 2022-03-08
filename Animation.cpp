@@ -42,7 +42,11 @@ void Animation::animate(const float dt)
 
 sf::IntRect Animation::getCurrentFrame()
 {
-	return frames[currentFrameIdx];
+	sf::IntRect frame = frames[currentFrameIdx];
+	if(!bIsFlipped)
+		return frame;
+	// if we are flipped then read right-to-left
+	return sf::IntRect(frame.left + frame.width,frame.top,-frame.left,frame.height);
 }
 
 void Animation::setFlipped(bool flip)
