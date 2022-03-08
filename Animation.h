@@ -28,6 +28,6 @@ class Animation
 		float frameSpeed = 1.f;
 		int currentFrameIdx = 0;
 
-		float timeElapsed = 0.f;
+		float frameTimeElapsed = 0.f;
 };
 

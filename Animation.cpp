@@ -24,7 +24,19 @@ void Animation::animate(const float dt)
 {
 	if(bIsPlaying)
 	{
-		timeElapsed += dt;
+		frameTimeElapsed += dt;
+		if(frameTimeElapsed >= frameSpeed)
+		{
+			if(currentFrameIdx+1 >= frames.size())
+			{
+				if(bIsLooping)
+					currentFrameIdx = 0;
+				else
+					bIsPlaying = false;
+			}
+			else currentFrameIdx++;
+			frameTimeElapsed = 0;
+		}
 	}
 }
 
