@@ -1,6 +1,7 @@
 //Copyright Sam Collier 2022
 
 #include "Animation.h"
+#include <iostream>
 
 Animation::Animation()
 {
@@ -46,7 +47,7 @@ sf::IntRect Animation::getCurrentFrame()
 	if(!bIsFlipped)
 		return frame;
 	// if we are flipped then read right-to-left
-	return sf::IntRect(frame.left + frame.width,frame.top,-frame.left,frame.height);
+	return sf::IntRect(frame.left + frame.width,frame.top,-frame.width,frame.height);
 }
 
 void Animation::setFlipped(bool flip)
@@ -72,5 +73,10 @@ void Animation::play()
 void Animation::setIsLooping(bool loop)
 {
 	bIsLooping = loop;
+}
+
+void Animation::setToInitialFrame()
+{
+	currentFrameIdx = 0;
 }
 

@@ -19,6 +19,7 @@ class Animation
 		void pause();
 		void play();
 		void setIsLooping(bool loop);
+		void setToInitialFrame();
 
 	private:
 		std::vector<sf::IntRect> frames;
