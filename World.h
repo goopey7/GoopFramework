@@ -9,6 +9,8 @@
 #pragma once
 
 #include "SpriteNode.h"
+#include "Actor.h"
+#include "Collision.h"
 #include "CommandQueue.h"
 #include "ResourceHolder.h"
 
@@ -44,6 +46,8 @@ class World : private sf::NonCopyable
 		sf::Vector2f spawnPos;
 
 		sf::RenderWindow& window;
+
+		std::vector<Actor*> collidingActors;
 	private:
 
 		Node worldGraph;

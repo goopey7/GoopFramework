@@ -36,6 +36,19 @@ void World::fixedUpdate(const float dt)
 		worldGraph.onCommand(commandQueue.pop(),dt);
 
 	worldGraph.fixedUpdate(dt);
+
+	// check collisions
+	for(int i=0;i<collidingActors.size()-1;i++)
+	{
+		for(int j=i+1; j<collidingActors.size();j++)
+		{
+			if(Collision::checkBoundingBox(collidingActors[i], collidingActors[j]))
+			{
+				collidingActors[i]->onCollision(collidingActors[j]);
+				collidingActors[j]->onCollision(collidingActors[i]);
+			}
+		}
+	}
 }
 
 void World::draw()
