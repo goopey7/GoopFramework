@@ -12,6 +12,7 @@ namespace Category
 		None = 0,
 		Scene = 1 << 0,
 		PlayerCharacter = 1 << 1,
+		Actor = 1 << 2,
 	};
 }
 // so for example

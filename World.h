@@ -31,7 +31,9 @@ class World : private sf::NonCopyable
 		enum Layer
 		{
 			Background,
-			Foreground,
+			Tile,
+			Object,
+			Entity,
 			layerCount
 		};
 		

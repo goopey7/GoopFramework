@@ -20,12 +20,16 @@ class Actor : public Node
 		sf::FloatRect getCollisionBox() const;
 		void setCollisionBox(sf::FloatRect box);
 		void toggleDebugMode();
+		void setTexture(unsigned int texture);
+		void setTextureRect(sf::IntRect textureRect);
 
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;
+
 		sf::FloatRect collisionBox;
 		bool bCollisionEnabled = false;
+
 		sf::RectangleShape box;
 		bool bDebugMode = false;
 };
