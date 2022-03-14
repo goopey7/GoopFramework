@@ -41,8 +41,8 @@ class World : private sf::NonCopyable
 
 		sf::Vector2f spawnPos;
 
-	private:
 		sf::RenderWindow& window;
+	private:
 
 		Node worldGraph;
 

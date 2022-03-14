@@ -31,14 +31,13 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		sf::Vector2f getWorldPosition() const;
 		virtual unsigned int getCategory() const;
 		void onCommand(const Command& command, const float dt);
+		// final means that children of this class cannot override it
+		// draw renders the entire node and children
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 
 	private:
 		std::vector<NodePtr> children;
 		Node* parent = nullptr;
-
-		// final means that children of this class cannot override it
-		// draw renders the entire node and children
-		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 
 		// only draws the current node but not it's children
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{};

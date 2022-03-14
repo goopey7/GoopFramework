@@ -16,9 +16,17 @@ class Actor : public Node
 		virtual void fixedUpateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 		virtual unsigned int getCategory() const override;
+		virtual void onCollision(Actor* other);
+		sf::FloatRect getCollisionBox() const;
+		void setCollisionBox(sf::FloatRect box);
+		void toggleDebugMode();
 
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;
+		sf::FloatRect collisionBox;
+		bool bCollisionEnabled = false;
+		sf::RectangleShape box;
+		bool bDebugMode = false;
 };
 
