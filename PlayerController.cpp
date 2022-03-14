@@ -18,14 +18,27 @@ void PlayerController::handleEvent(const sf::Event& event, CommandQueue& command
 {
 	for(auto binding : keyBindings)
 	{
-		if(sf::Keyboard::isKeyPressed(binding.first) && wasReleased[binding.first])
+		if(sf::Keyboard::isKeyPressed(binding.first) && wasKeyReleased[binding.first])
 		{
-			wasReleased[binding.first] = false;
+			wasKeyReleased[binding.first] = false;
 			commands.push(pressedActions[binding.second]);
 		}
-		else if(!sf::Keyboard::isKeyPressed(binding.first) && !wasReleased[binding.first])
+		else if(!sf::Keyboard::isKeyPressed(binding.first) && !wasKeyReleased[binding.first])
 		{
-			wasReleased[binding.first] = true;
+			wasKeyReleased[binding.first] = true;
+			commands.push(releasedActions[binding.second]);
+		}
+	}
+	for(auto binding : mouseBindings)
+	{
+		if(sf::Mouse::isButtonPressed(binding.first) && wasMouseButtonReleased[binding.first])
+		{
+			wasMouseButtonReleased[binding.first] = false;
+			commands.push(pressedActions[binding.second]);
+		}
+		else if(!sf::Mouse::isButtonPressed(binding.first) && !wasMouseButtonReleased[binding.first])
+		{
+			wasMouseButtonReleased[binding.first] = true;
 			commands.push(releasedActions[binding.second]);
 		}
 	}
@@ -45,9 +58,19 @@ void PlayerController::handleHeldInput(CommandQueue& commands)
 			}
 		}
 	}
+	for(auto binding : mouseBindings)
+	{
+		if(sf::Mouse::isButtonPressed(binding.first))
+		{
+			if(heldActions.count(binding.second) == 1)
+			{
+				commands.push(heldActions[binding.second]);
+			}
+		}
+	}
 }
 
-void PlayerController::bindHeldKey(unsigned int action, sf::Keyboard::Key key, bool remap)
+void PlayerController::bindKey(unsigned int action, sf::Keyboard::Key key, bool remap)
 {
 	// When remapping we don't want
 	// the previous binding to still be mapped
@@ -64,6 +87,22 @@ void PlayerController::bindHeldKey(unsigned int action, sf::Keyboard::Key key, b
 	}
 
 	keyBindings[key] = action;
+}
+
+void PlayerController::bindMouseButton(unsigned int action, sf::Mouse::Button button, bool remap)
+{
+	if(remap)
+	{
+		for(auto binding : mouseBindings)
+		{
+			if(binding.second == action)
+			{
+				mouseBindings.erase(binding.first);
+			}
+		}
+	}
+
+	mouseBindings[button] = action;
 }
 
 sf::Keyboard::Key PlayerController::getBindedKey(unsigned int action) const
