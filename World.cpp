@@ -42,11 +42,7 @@ void World::fixedUpdate(const float dt)
 	{
 		for(int j=i+1; j<collidingActors.size();j++)
 		{
-			if(Collision::checkBoundingBox(collidingActors[i], collidingActors[j]))
-			{
-				collidingActors[i]->onCollision(collidingActors[j]);
-				collidingActors[j]->onCollision(collidingActors[i]);
-			}
+			Collision::checkBoundingBox(collidingActors[i], collidingActors[j]);
 		}
 	}
 }

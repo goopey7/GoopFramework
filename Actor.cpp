@@ -7,8 +7,8 @@ Actor::Actor(const TextureHolder& textures)
 {
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Red);
-	box.setOutlineThickness(1.f);
 	box.setPosition(getPosition());
+	box.setOutlineThickness(1.f);
 }
 
 Actor::~Actor()
@@ -40,7 +40,7 @@ sf::FloatRect Actor::getCollisionBox() const
 	return collisionBox;
 }
 
-void Actor::onCollision(Actor* other)
+void Actor::onCollision(Actor* other, unsigned int sides)
 {
 }
 
@@ -59,9 +59,6 @@ void Actor::toggleDebugMode()
 void Actor::setTextureRect(sf::IntRect textureRect)
 {
 	sprite.setTextureRect(textureRect);
-	collisionBox.width = sprite.getTextureRect().width;
-	collisionBox.height = sprite.getTextureRect().height;
-	box.setSize(sf::Vector2f(collisionBox.width,collisionBox.height));
 }
 
 void Actor::setTexture(unsigned int texture)
@@ -69,6 +66,24 @@ void Actor::setTexture(unsigned int texture)
 	sprite.setTexture(textures.get(texture));
 	collisionBox.width = sprite.getTextureRect().width * sprite.getScale().x;
 	collisionBox.height = sprite.getTextureRect().height * sprite.getScale().y;
+}
+
+void Actor::scale(sf::Vector2f scaleFactor)
+{
+	sprite.setScale(scaleFactor);
+	updateBox();
+}
+
+void Actor::scale(float scaleX, float scaleY)
+{
+	sprite.setScale(scaleX,scaleY);
+	updateBox();
+}
+
+void Actor::updateBox()
+{
+	collisionBox.width *= sprite.getScale().x;
+	collisionBox.height *= sprite.getScale().y;
 	box.setSize(sf::Vector2f(collisionBox.width,collisionBox.height));
 }
 

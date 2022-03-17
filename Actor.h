@@ -3,6 +3,7 @@
 
 #include "ResourceHolder.h"
 #include "Node.h"
+#include "CollisionHelpers.h"
 
 typedef ResourceHolder<sf::Texture,unsigned int> TextureHolder;
 
@@ -16,12 +17,15 @@ class Actor : public Node
 		virtual void fixedUpateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 		virtual unsigned int getCategory() const override;
-		virtual void onCollision(Actor* other);
+		virtual void onCollision(Actor* other, unsigned int sides);
 		sf::FloatRect getCollisionBox() const;
 		void setCollisionBox(sf::FloatRect box);
 		void toggleDebugMode();
 		void setTexture(unsigned int texture);
 		void setTextureRect(sf::IntRect textureRect);
+		void scale(sf::Vector2f scaleFactor);
+		void scale(float scaleX, float scaleY);
+		void updateBox();
 
 	protected:
 		sf::Sprite sprite;

@@ -3,9 +3,11 @@
 
 #include "Actor.h"
 
+
+
 class Collision
 {
 	public:
-		static bool checkBoundingBox(Actor* a1, Actor* a2);
+		static void checkBoundingBox(Actor* a1, Actor* a2);
 };
 
