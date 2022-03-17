@@ -23,9 +23,7 @@ void Actor::fixedUpateCurrent(const float dt)
 {
 }
 
-void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	target.draw(sprite,states);
+void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const { target.draw(sprite,states);
 	if(bDebugMode)
 		target.draw(box,states);
 }
@@ -64,8 +62,6 @@ void Actor::setTextureRect(sf::IntRect textureRect)
 void Actor::setTexture(unsigned int texture)
 {
 	sprite.setTexture(textures.get(texture));
-	collisionBox.width = sprite.getTextureRect().width * sprite.getScale().x;
-	collisionBox.height = sprite.getTextureRect().height * sprite.getScale().y;
 }
 
 void Actor::scale(sf::Vector2f scaleFactor)
