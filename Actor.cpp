@@ -38,7 +38,15 @@ sf::FloatRect Actor::getCollisionBox() const
 	return collisionBox;
 }
 
-void Actor::onCollision(Actor* other, unsigned int sides)
+void Actor::onCollisionEnter(Actor* other, unsigned int sides)
+{
+}
+
+void Actor::whileColliding(Actor* other, unsigned int sides)
+{
+}
+
+void Actor::onCollisionExit(Actor* other)
 {
 }
 
@@ -81,5 +89,35 @@ void Actor::updateBox()
 	collisionBox.width *= sprite.getScale().x;
 	collisionBox.height *= sprite.getScale().y;
 	box.setSize(sf::Vector2f(collisionBox.width,collisionBox.height));
+}
+
+bool Actor::hasBegunCollision(Actor* a)
+{
+	return collisionBegan[a];
+}
+
+bool Actor::isColliding(Actor* a)
+{
+	return collisionDuring[a];
+}
+
+void Actor::beginCollision(Actor* a, unsigned int sides)
+{
+	collisionBegan[a] = true;
+	collisionDuring[a] = false;
+	onCollisionEnter(a, sides);
+}
+
+void Actor::duringCollision(Actor* a, unsigned int sides)
+{
+	collisionDuring[a] = true;
+	whileColliding(a,sides);
+}
+
+void Actor::endCollision(Actor* a)
+{
+	collisionDuring[a] = false;
+	collisionBegan[a] = false;
+	onCollisionExit(a);
 }
 

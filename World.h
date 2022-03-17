@@ -48,6 +48,7 @@ class World : private sf::NonCopyable
 		sf::RenderWindow& window;
 
 		std::vector<Actor*> collidingActors;
+		
 	private:
 
 		Node worldGraph;

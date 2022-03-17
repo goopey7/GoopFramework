@@ -17,7 +17,6 @@ class Actor : public Node
 		virtual void fixedUpateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 		virtual unsigned int getCategory() const override;
-		virtual void onCollision(Actor* other, unsigned int sides);
 		sf::FloatRect getCollisionBox() const;
 		void setCollisionBox(sf::FloatRect box);
 		void toggleDebugMode();
@@ -26,6 +25,17 @@ class Actor : public Node
 		void scale(sf::Vector2f scaleFactor);
 		void scale(float scaleX, float scaleY);
 		void updateBox();
+
+		bool isColliding(Actor* a);
+		bool hasBegunCollision(Actor* a);
+
+		void beginCollision(Actor* a, unsigned int sides);
+		void duringCollision(Actor* a, unsigned int sides);
+		void endCollision(Actor* a);
+
+		virtual void onCollisionEnter(Actor* other, unsigned int sides);
+		virtual void whileColliding(Actor* other, unsigned int sides);
+		virtual void onCollisionExit(Actor* other);
 
 	protected:
 		sf::Sprite sprite;
@@ -36,5 +46,8 @@ class Actor : public Node
 
 		sf::RectangleShape box;
 		bool bDebugMode = false;
+	private:
+		std::map<Actor*,bool> collisionBegan;
+		std::map<Actor*,bool> collisionDuring;
 };
 
