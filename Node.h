@@ -40,7 +40,7 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		Node* parent = nullptr;
 
 		// only draws the current node but not it's children
-		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{};
+		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const{};
 
 		// children are expected to override their respective 'current' methods
 		virtual void fixedUpateCurrent(const float dt){};

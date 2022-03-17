@@ -24,6 +24,6 @@ class SpriteNode : public Node
 
 	private:
 		sf::Sprite sprite;
-		virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
+		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 };
 

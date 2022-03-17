@@ -23,7 +23,7 @@ void Actor::fixedUpateCurrent(const float dt)
 {
 }
 
-void Actor::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const { target.draw(sprite,states);
+void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const { target.draw(sprite,states);
 	if(bDebugMode)
 		target.draw(box,states);
 }
