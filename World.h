@@ -37,7 +37,9 @@ class World : private sf::NonCopyable
 		void draw();
 		CommandQueue& getCommandQueue();
 		virtual void buildGraph();
-		void addNode(std::unique_ptr<Node>& node, Layer layer, bool bCollisionEnabled=false);
+
+		template <typename NodeChild>
+		void addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled=false);
 
 	protected:
 		sf::Vector2f spawnPos;
@@ -52,4 +54,13 @@ class World : private sf::NonCopyable
 		std::vector<Actor*> collidingActors;
 		CommandQueue commandQueue;
 };
+
+// collision should only be enabled if the node being passed in is an actor
+template <typename NodeChild>
+void World::addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled)
+{
+	if(bCollisionEnabled)
+		collidingActors.push_back(reinterpret_cast<Actor*>(node->get()));
+	worldLayers[layer]->attachChild(std::move(*node));
+}
 
