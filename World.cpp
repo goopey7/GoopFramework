@@ -10,6 +10,7 @@
 World::World(sf::RenderWindow& window)
 	: window(window),spawnPos(100.f,100.f)
 {
+	loadFromFile("untitled.json");
 	buildGraph();
 }
 
@@ -59,5 +60,16 @@ World::~World()
 CommandQueue& World::getCommandQueue()
 {
 	return commandQueue;
+}
+
+void World::loadFromFile(const char* fileName)
+{
+	using nlohmann::json;
+	std::ifstream file(fileName);
+	json map = json::parse(file);
+	std::vector<int> layout = map["layers"].at(0)["data"];
+	std::cout << "\n===============================\n";
+	for(int n : layout)
+		std::cout << n << '\n';
 }
 

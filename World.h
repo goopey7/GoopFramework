@@ -14,6 +14,9 @@
 #include "CommandQueue.h"
 #include "ResourceHolder.h"
 
+#include <fstream>
+#include "Json.h"
+
 class World : private sf::NonCopyable
 {
 	protected:
@@ -40,6 +43,8 @@ class World : private sf::NonCopyable
 
 		template <typename NodeChild>
 		void addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled=false);
+
+		void loadFromFile(const char* fileName);
 
 	protected:
 		sf::Vector2f spawnPos;
