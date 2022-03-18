@@ -16,18 +16,7 @@
 
 class World : private sf::NonCopyable
 {
-	public:
-		explicit World(sf::RenderWindow& window);
-		~World();
-		
-		void update(const float dt);
-		void fixedUpdate(const float dt);
-		void draw();
-		CommandQueue& getCommandQueue();
-		virtual void buildGraph();
-
 	protected:
-
 		// LayerCount will naturally return the number of layers before it
 		// enums start at 0
 		enum Layer
@@ -38,21 +27,29 @@ class World : private sf::NonCopyable
 			Entity,
 			layerCount
 		};
+
+	public:
+		explicit World(sf::RenderWindow& window);
+		~World();
 		
+		void update(const float dt);
+		void fixedUpdate(const float dt);
+		void draw();
+		CommandQueue& getCommandQueue();
+		virtual void buildGraph();
+		void addNode(std::unique_ptr<Node>& node, Layer layer, bool bCollisionEnabled=false);
+
+	protected:
+		sf::Vector2f spawnPos;
+		sf::RenderWindow& window;
+
+	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements
 		// as ptrs and adds additional functions such as size()
 		std::array<Node*, layerCount> worldLayers;
 
-		sf::Vector2f spawnPos;
-
-		sf::RenderWindow& window;
-
-		std::vector<Actor*> collidingActors;
-		
-	private:
-
 		Node worldGraph;
-
+		std::vector<Actor*> collidingActors;
 		CommandQueue commandQueue;
 };
 

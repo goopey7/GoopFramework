@@ -61,3 +61,11 @@ CommandQueue& World::getCommandQueue()
 	return commandQueue;
 }
 
+// collision should only be enabled if the node being passed in is an actor
+void World::addNode(std::unique_ptr<Node>& node, Layer layer, bool bCollisionEnabled)
+{
+	if(bCollisionEnabled)
+		collidingActors.push_back(reinterpret_cast<Actor*>(node.get()));
+	worldLayers[layer]->attachChild(std::move(node));
+}
+
