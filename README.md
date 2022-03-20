@@ -1,4 +1,7 @@
 # Goop Framework
+[![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/goopey7/goopFramework.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/goopey7/goopFramework/context:cpp)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/goopey7/goopFramework.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/goopey7/goopFramework/alerts/)
+
 An SFML Framework to build games upon
 
 ## Credits
