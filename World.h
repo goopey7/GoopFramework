@@ -44,7 +44,7 @@ class World : private sf::NonCopyable
 		template <typename NodeChild>
 		void addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled=false);
 
-		void loadFromFile(const char* fileName);
+		void loadFromFile(const char* fileName, TextureHolder& textures);
 
 	protected:
 		sf::Vector2f spawnPos;
