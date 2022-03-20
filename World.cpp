@@ -66,7 +66,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 	using nlohmann::json;
 	std::ifstream file(fileName);
 	json map = json::parse(file);
-	std::vector<int> layout = map["layers"].at(0)["data"];
+	json layers = map["layers"];
 	std::map<std::string,int> tileSets;
 	for(int i=0; i<map["tilesets"].size();i++)
 	{
@@ -87,24 +87,28 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 		textures.load(textureID,pair.first);
 	}
 
-	int i = 0;
-	for(int y = 0; y<mapHeight; y++)
+	for(json layer : layers)
 	{
-		for(int x = 0; x<mapWidth; x++)
+		std::vector<int> layout = layer["data"];
+		int i = 0;
+		for(int y = 0; y<mapHeight; y++)
 		{
-			if(layout[i] != 0)
+			for(int x = 0; x<mapWidth; x++)
 			{
-				std::unique_ptr<Actor> tile(new Actor(textures));
-				tile->setTexture(0);
-				tile->setPosition(x*tileWidth,y*tileHeight);
-				sf::IntRect texRect = sf::IntRect(
-							(layout[i]-1)*tileWidth,0,
-							tileWidth,tileHeight);
-				tile->setTextureRect(texRect);
-				tile->setCollisionBox(sf::FloatRect(0,0,tileWidth,tileHeight));
-				addNode(&tile,Object,true);
+				if(layout[i] != 0)
+				{
+					std::unique_ptr<Actor> tile(new Actor(textures));
+					tile->setTexture(0);
+					tile->setPosition(x*tileWidth,y*tileHeight);
+					sf::IntRect texRect = sf::IntRect(
+								(layout[i]-1)*tileWidth,0,
+								tileWidth,tileHeight);
+					tile->setTextureRect(texRect);
+					tile->setCollisionBox(sf::FloatRect(0,0,tileWidth,tileHeight));
+					addNode(&tile,Object,true);
+				}
+				i++;
 			}
-			i++;
 		}
 	}
 }
