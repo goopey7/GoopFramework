@@ -30,12 +30,12 @@ class Actor : public Node
 		bool hasBegunCollision(Actor* a);
 
 		void beginCollision(Actor* a, unsigned int sides);
-		void duringCollision(Actor* a, unsigned int sides);
+		void duringCollision(Actor* a);
 		void endCollision(Actor* a);
 
 		virtual void onCollisionEnter(Actor* other, unsigned int sides);
 		virtual void whileColliding(Actor* other, unsigned int sides);
-		virtual void onCollisionExit(Actor* other);
+		virtual void onCollisionExit(Actor* other, unsigned int sides);
 
 	protected:
 		sf::Sprite sprite;
@@ -46,6 +46,8 @@ class Actor : public Node
 
 		sf::RectangleShape box;
 		bool bDebugMode = false;
+
+		std::map<Actor*, unsigned int> actorsInCollision;
 	private:
 		std::map<Actor*,bool> collisionBegan;
 		std::map<Actor*,bool> collisionDuring;

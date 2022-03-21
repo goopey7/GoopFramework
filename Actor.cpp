@@ -46,7 +46,7 @@ void Actor::whileColliding(Actor* other, unsigned int sides)
 {
 }
 
-void Actor::onCollisionExit(Actor* other)
+void Actor::onCollisionExit(Actor* other, unsigned int sides)
 {
 }
 
@@ -105,19 +105,21 @@ void Actor::beginCollision(Actor* a, unsigned int sides)
 {
 	collisionBegan[a] = true;
 	collisionDuring[a] = false;
+	actorsInCollision[a] = sides;
 	onCollisionEnter(a, sides);
 }
 
-void Actor::duringCollision(Actor* a, unsigned int sides)
+void Actor::duringCollision(Actor* a)
 {
 	collisionDuring[a] = true;
-	whileColliding(a,sides);
+	whileColliding(a,actorsInCollision[a]);
 }
 
 void Actor::endCollision(Actor* a)
 {
 	collisionDuring[a] = false;
 	collisionBegan[a] = false;
-	onCollisionExit(a);
+	onCollisionExit(a,actorsInCollision[a]);
+	actorsInCollision.erase(a);
 }
 
