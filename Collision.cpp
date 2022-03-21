@@ -61,7 +61,7 @@ void Collision::checkBoundingBox(Actor* a1, Actor* a2)
 
 	if(a1->hasBegunCollision(a2))
 	{
-		a1->duringCollision(a2,a1Sides);
+		a1->duringCollision(a2);
 	}
 	else
 	{
@@ -70,7 +70,7 @@ void Collision::checkBoundingBox(Actor* a1, Actor* a2)
 
 	if(a2->hasBegunCollision(a1))
 	{
-		a2->duringCollision(a1,a1Sides);
+		a2->duringCollision(a1);
 	}
 	else
 	{
