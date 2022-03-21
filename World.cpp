@@ -120,8 +120,8 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 				if(object["properties"].at(0)["value"] == "block")
 				{
 					std::unique_ptr<Actor> colBox(new Actor(textures));
-					colBox->setPosition(rect.left,rect.top);
-					colBox->setCollisionBox(sf::FloatRect(0.f,0.f,rect.width,rect.height));
+					colBox->setPosition(0.f,0.f);
+					colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
 					addNode(&colBox,Object,true);
 				}
 			}
