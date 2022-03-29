@@ -29,25 +29,26 @@ class Actor : public Node
 		bool isColliding(Actor* a);
 		bool hasBegunCollision(Actor* a);
 
-		void beginCollision(Actor* a, unsigned int sides);
+		void beginCollision(Actor* a, unsigned int sides, const sf::FloatRect& overlap);
 		void duringCollision(Actor* a);
 		void endCollision(Actor* a);
 
-		virtual void onCollisionEnter(Actor* other, unsigned int sides);
-		virtual void whileColliding(Actor* other, unsigned int sides);
-		virtual void onCollisionExit(Actor* other, unsigned int sides);
+		virtual void onCollisionEnter(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
+		virtual void whileColliding(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
+		virtual void onCollisionExit(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
 
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;
 
 		sf::FloatRect collisionBox;
+		// TODO Add sub-boxes
 		bool bCollisionEnabled = false;
 
 		sf::RectangleShape box;
 		bool bDebugMode = false;
 
-		std::map<Actor*, unsigned int> actorsInCollision;
+		std::map<Actor*, std::pair<unsigned int,sf::FloatRect>> actorsInCollision;
 	private:
 		std::map<Actor*,bool> collisionBegan;
 		std::map<Actor*,bool> collisionDuring;

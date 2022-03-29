@@ -35,6 +35,7 @@ void Collision::checkBoundingBox(Actor* a1, Actor* a2)
 		endCollision(a1,a2);
 		return;	
 	}
+
 	unsigned int a1Sides = 0;
 	unsigned int a2Sides = 0;
 
@@ -59,13 +60,49 @@ void Collision::checkBoundingBox(Actor* a1, Actor* a2)
 		a2Sides |= gf::Side::Bottom;
 	}
 
+	float overlapL,overlapT,overlapX,overlapY;
+
+	if(a1Sides & gf::Side::Right && a1Sides & gf::Side::Left)
+	{
+		overlapL = pos1.x + a1->getCollisionBox().left;
+		overlapX = overlapL + a1->getCollisionBox().width;
+	}
+	else if(a1Sides & gf::Side::Right)
+	{
+		overlapL = pos2.x + a2->getCollisionBox().left;
+		overlapX = overlapL + a1->getCollisionBox().width;
+	}
+	else if(a2Sides & gf::Side::Right)
+	{
+		overlapL = pos1.x + a1->getCollisionBox().left;
+		overlapX = overlapL + a2->getCollisionBox().width;
+	}
+
+	if(a1Sides & gf::Side::Top && a1Sides & gf::Side::Left)
+	{
+		overlapT = pos1.y + a1->getCollisionBox().top;
+		overlapY = overlapT + a1->getCollisionBox().height;
+	}
+	else if(a1Sides & gf::Side::Bottom)
+	{
+		overlapT = pos2.y + a2->getCollisionBox().top;
+		overlapY = overlapT + a1->getCollisionBox().height;
+	}
+	else if(a2Sides & gf::Side::Bottom)
+	{
+		overlapT = pos1.y + a1->getCollisionBox().top;
+		overlapY = overlapT + a2->getCollisionBox().height;
+	}
+
+	sf::FloatRect overlap = sf::FloatRect(overlapL,overlapT,overlapX,overlapY);
+
 	if(a1->hasBegunCollision(a2))
 	{
 		a1->duringCollision(a2);
 	}
 	else
 	{
-		a1->beginCollision(a2,a1Sides);
+		a1->beginCollision(a2,a1Sides, overlap);
 	}
 
 	if(a2->hasBegunCollision(a1))
@@ -74,7 +111,7 @@ void Collision::checkBoundingBox(Actor* a1, Actor* a2)
 	}
 	else
 	{
-		a2->beginCollision(a1,a2Sides);
+		a2->beginCollision(a1,a2Sides, overlap);
 	}
 	return;
 }
