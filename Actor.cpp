@@ -79,36 +79,18 @@ void Actor::updateBox()
 	box.setSize(sf::Vector2f(collisionBox.width,collisionBox.height));
 }
 
-bool Actor::hasBegunCollision(Actor* a)
+
+void Actor::onCollision()
 {
-	return collisionBegan[a];
+
 }
 
-bool Actor::isColliding(Actor* a)
+void Actor::onCollisionExit()
 {
-	return collisionDuring[a];
 }
 
-void Actor::beginCollision(Actor* a, unsigned int sides, const sf::FloatRect& overlap)
+sf::Vector2u Actor::getTextureSize()
 {
-	collisionBegan[a] = true;
-	collisionDuring[a] = false;
-	actorsInCollision[a].first = sides;
-	actorsInCollision[a].second = overlap;
-//	onCollisionEnter(a, sides, actorsInCollision[a].second);
-}
-
-void Actor::duringCollision(Actor* a)
-{
-	collisionDuring[a] = true;
-//	whileColliding(a,actorsInCollision[a].first,actorsInCollision[a].second);
-}
-
-void Actor::endCollision(Actor* a)
-{
-	collisionDuring[a] = false;
-	collisionBegan[a] = false;
-//	onCollisionExit(a,actorsInCollision[a].first,actorsInCollision[a].second);
-	actorsInCollision.erase(a);
+	return sprite.getTexture()->getSize();
 }
 

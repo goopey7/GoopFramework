@@ -20,6 +20,7 @@ class Actor : public Node
 		sf::FloatRect getCollisionBox() const;
 		void setCollisionBox(sf::FloatRect box);
 		void toggleDebugMode();
+		sf::Vector2u getTextureSize();
 		void setTexture(unsigned int texture);
 		void setTextureRect(sf::IntRect textureRect);
 		void scale(sf::Vector2f scaleFactor);
@@ -29,9 +30,8 @@ class Actor : public Node
 		bool isColliding(Actor* a);
 		bool hasBegunCollision(Actor* a);
 
-		void beginCollision(Actor* a, unsigned int sides, const sf::FloatRect& overlap);
-		void duringCollision(Actor* a);
-		void endCollision(Actor* a);
+		virtual void onCollision();
+		virtual void onCollisionExit();
 
 		
 	protected:
@@ -39,15 +39,11 @@ class Actor : public Node
 		const TextureHolder& textures;
 
 		sf::FloatRect collisionBox;
-		// TODO Add sub-boxes
 		bool bCollisionEnabled = false;
 
 		sf::RectangleShape box;
 		bool bDebugMode = false;
 
-		std::map<Actor*, std::pair<unsigned int,sf::FloatRect>> actorsInCollision;
 	private:
-		std::map<Actor*,bool> collisionBegan;
-		std::map<Actor*,bool> collisionDuring;
 };
 

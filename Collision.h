@@ -5,7 +5,8 @@
 
 class Collision
 {
-	// returns true if point lies within Actor's aabb
-	static bool ActorVPoint(Actor* a, const sf::Vector2f point);
+	public:
+		// returns true if point lies within Actor's aabb
+		static bool ActorVPoint(Actor* a, const sf::Vector2f point);
 };
 
