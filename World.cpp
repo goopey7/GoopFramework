@@ -42,7 +42,16 @@ void World::fixedUpdate(const float dt)
 	{
 		for(int j=i+1; j<collidingActors.size();j++)
 		{
-			// TODO ACTOR-ACTOR COLLISIONS HERE
+			if(Collision::ActorVActor(collidingActors[i],collidingActors[j]))
+			{
+				collidingActors[i]->onCollision();
+				collidingActors[j]->onCollision();
+			}
+			else
+			{
+				collidingActors[i]->onCollisionExit();
+				collidingActors[j]->onCollisionExit();
+			}
 		}
 	}
 }
