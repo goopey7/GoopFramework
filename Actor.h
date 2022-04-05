@@ -33,10 +33,7 @@ class Actor : public Node
 		void duringCollision(Actor* a);
 		void endCollision(Actor* a);
 
-		virtual void onCollisionEnter(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
-		virtual void whileColliding(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
-		virtual void onCollisionExit(Actor* other, unsigned int sides, const sf::FloatRect& overlap);
-
+		
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;

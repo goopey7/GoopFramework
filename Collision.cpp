@@ -2,117 +2,13 @@
 
 #include "Collision.h"
 
-void endCollision(Actor* a1, Actor* a2)
+bool Collision::ActorVPoint(Actor* a, const sf::Vector2f point)
 {
-	if(a1->isColliding(a2) || a1->hasBegunCollision(a2))
-		a1->endCollision(a2);
-	if(a2->isColliding(a1) || a2->hasBegunCollision(a1))
-		a2->endCollision(a1);
-	return;
-}
-
-void Collision::checkBoundingBox(Actor* a1, Actor* a2)
-{
-	sf::Vector2f pos1 = a1->getWorldPosition();
-	sf::Vector2f pos2 = a2->getWorldPosition();
-	if (pos1.x + a1->getCollisionBox().left + a1->getCollisionBox().width < pos2.x + a2->getCollisionBox().left)
-	{
-		endCollision(a1,a2);
-		return;
-	}
-	if (pos1.x + a1->getCollisionBox().left > pos2.x + a2->getCollisionBox().left + a2->getCollisionBox().width)
-	{
-		endCollision(a1,a2);
-		return;	
-	}
-	if (pos1.y + a1->getCollisionBox().top + a1->getCollisionBox().height < pos2.y + a2->getCollisionBox().top)
-	{
-		endCollision(a1,a2);
-		return;	
-	}
-	if (pos1.y + a1->getCollisionBox().top > pos2.y + a2->getCollisionBox().top + a2->getCollisionBox().height)
-	{
-		endCollision(a1,a2);
-		return;	
-	}
-
-	unsigned int a1Sides = 0;
-	unsigned int a2Sides = 0;
-
-	if(pos1.x + a1->getCollisionBox().left + a1->getCollisionBox().width < pos2.x + a2->getCollisionBox().left + a2->getCollisionBox().width)
-	{
-		a1Sides |= gf::Side::Right;
-		a2Sides |= gf::Side::Left;
-	}
-	if(pos1.x + a1->getCollisionBox().left > pos2.x + a2->getCollisionBox().left)
-	{
-		a1Sides |= gf::Side::Left;
-		a2Sides |= gf::Side::Right;
-	}
-	if(pos1.y + a1->getCollisionBox().top + a1->getCollisionBox().height < pos2.y + a2->getCollisionBox().top + a2->getCollisionBox().height)
-	{
-		a1Sides |= gf::Side::Bottom;
-		a2Sides |= gf::Side::Top;
-	}
-	if(pos1.y + a1->getCollisionBox().top > pos2.y + a2->getCollisionBox().top)
-	{
-		a1Sides |= gf::Side::Top;
-		a2Sides |= gf::Side::Bottom;
-	}
-
-	float overlapL,overlapT,overlapX,overlapY;
-
-	if(a1Sides & gf::Side::Right && a1Sides & gf::Side::Left)
-	{
-		overlapL = pos1.x + a1->getCollisionBox().left;
-		overlapX = overlapL + a1->getCollisionBox().width;
-	}
-	else if(a1Sides & gf::Side::Right)
-	{
-		overlapL = pos2.x + a2->getCollisionBox().left;
-		overlapX = overlapL + a1->getCollisionBox().width;
-	}
-	else if(a2Sides & gf::Side::Right)
-	{
-		overlapL = pos1.x + a1->getCollisionBox().left;
-		overlapX = overlapL + a2->getCollisionBox().width;
-	}
-
-	if(a1Sides & gf::Side::Top && a1Sides & gf::Side::Left)
-	{
-		overlapT = pos1.y + a1->getCollisionBox().top;
-		overlapY = overlapT + a1->getCollisionBox().height;
-	}
-	else if(a1Sides & gf::Side::Bottom)
-	{
-		overlapT = pos2.y + a2->getCollisionBox().top;
-		overlapY = overlapT + a1->getCollisionBox().height;
-	}
-	else if(a2Sides & gf::Side::Bottom)
-	{
-		overlapT = pos1.y + a1->getCollisionBox().top;
-		overlapY = overlapT + a2->getCollisionBox().height;
-	}
-
-	sf::FloatRect overlap = sf::FloatRect(overlapL,overlapT,overlapX,overlapY);
-
-	if(a1->hasBegunCollision(a2))
-	{
-		a1->duringCollision(a2);
-	}
-	else
-	{
-		a1->beginCollision(a2,a1Sides, overlap);
-	}
-
-	if(a2->hasBegunCollision(a1))
-	{
-		a2->duringCollision(a1);
-	}
-	else
-	{
-		a2->beginCollision(a1,a2Sides, overlap);
-	}
-	return;
+	sf::FloatRect box = a->getCollisionBox();
+	sf::Vector2f aLocation = a->getWorldPosition();
+	
+	// does the point lie within the bounds of the box?
+	return (point.x >= aLocation.x + box.left && point.x <= aLocation.x + box.width
+			&& point.y >= aLocation.y + box.top && point.y <= aLocation.y + box.height);
 }
 

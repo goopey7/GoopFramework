@@ -38,18 +38,6 @@ sf::FloatRect Actor::getCollisionBox() const
 	return collisionBox;
 }
 
-void Actor::onCollisionEnter(Actor* other, unsigned int sides, const sf::FloatRect& overlap)
-{
-}
-
-void Actor::whileColliding(Actor* other, unsigned int sides, const sf::FloatRect& overlap)
-{
-}
-
-void Actor::onCollisionExit(Actor* other, unsigned int sides, const sf::FloatRect& overlap)
-{
-}
-
 void Actor::setCollisionBox(sf::FloatRect box)
 {
 	this->collisionBox = box;
@@ -107,20 +95,20 @@ void Actor::beginCollision(Actor* a, unsigned int sides, const sf::FloatRect& ov
 	collisionDuring[a] = false;
 	actorsInCollision[a].first = sides;
 	actorsInCollision[a].second = overlap;
-	onCollisionEnter(a, sides, actorsInCollision[a].second);
+//	onCollisionEnter(a, sides, actorsInCollision[a].second);
 }
 
 void Actor::duringCollision(Actor* a)
 {
 	collisionDuring[a] = true;
-	whileColliding(a,actorsInCollision[a].first,actorsInCollision[a].second);
+//	whileColliding(a,actorsInCollision[a].first,actorsInCollision[a].second);
 }
 
 void Actor::endCollision(Actor* a)
 {
 	collisionDuring[a] = false;
 	collisionBegan[a] = false;
-	onCollisionExit(a,actorsInCollision[a].first,actorsInCollision[a].second);
+//	onCollisionExit(a,actorsInCollision[a].first,actorsInCollision[a].second);
 	actorsInCollision.erase(a);
 }
 

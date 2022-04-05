@@ -3,11 +3,9 @@
 
 #include "Actor.h"
 
-
-
 class Collision
 {
-	public:
-		static void checkBoundingBox(Actor* a1, Actor* a2);
+	// returns true if point lies within Actor's aabb
+	static bool ActorVPoint(Actor* a, const sf::Vector2f point);
 };
 
