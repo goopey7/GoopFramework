@@ -18,6 +18,8 @@ class Actor : public Node
 		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 		virtual unsigned int getCategory() const override;
 		sf::FloatRect getCollisionBox() const;
+		sf::Vector2f getCollisionBoxSize() const;
+		sf::Vector2f getCollisionBoxPos() const;
 		void setCollisionBox(sf::FloatRect box);
 		void toggleDebugMode();
 		sf::Vector2u getTextureSize();

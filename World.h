@@ -58,6 +58,9 @@ class World : private sf::NonCopyable
 		Node worldGraph;
 		std::vector<Actor*> collidingActors;
 		CommandQueue commandQueue;
+
+		//TODO DELETE TESTING
+		sf::Vertex line[2];
 };
 
 // collision should only be enabled if the node being passed in is an actor

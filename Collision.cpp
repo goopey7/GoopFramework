@@ -2,7 +2,7 @@
 
 #include "Collision.h"
 
-bool Collision::ActorVPoint(Actor* a, const sf::Vector2f point)
+bool Collision::ActorVPoint(const Actor* a, const sf::Vector2f point)
 {
 	sf::FloatRect box = a->getCollisionBox();
 	sf::Vector2f aLocation = a->getWorldPosition();
@@ -12,7 +12,7 @@ bool Collision::ActorVPoint(Actor* a, const sf::Vector2f point)
 			&& point.y >= aLocation.y + box.top && point.y <= aLocation.y + box.height);
 }
 
-bool Collision::ActorVActor(Actor* a1, Actor* a2)
+bool Collision::ActorVActor(const Actor* a1, const Actor* a2)
 {
 	sf::FloatRect box1 = a1->getCollisionBox(), box2 = a2->getCollisionBox();
 	sf::Vector2f pos1 = a1->getWorldPosition(), pos2 = a2->getWorldPosition();
@@ -32,6 +32,50 @@ bool Collision::ActorVActor(Actor* a1, Actor* a2)
 	if (pos1.y + box1.top > pos2.y + box2.height)
 	{
 		return false;
+	}
+	return true;
+}
+
+// divides member-wise left/right
+sf::Vector2f divide(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return sf::Vector2f(v1.x/v2.x,v1.y/v2.y);
+}
+
+bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir, const Actor* a,
+		sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime)
+{
+	sf::Vector2f nearPoint = divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
+	sf::Vector2f farPoint = divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
+
+	// swap components around so they actually are near and far
+	if(nearPoint.x > farPoint.x) std::swap(nearPoint.x,farPoint.x);
+	if(nearPoint.y > farPoint.y) std::swap(nearPoint.y,farPoint.y);
+
+	if(nearPoint.x > farPoint.y || nearPoint.y > farPoint.x)
+		return false;
+
+	float nearT = std::max(nearPoint.x,nearPoint.y);
+	hitTime = nearT;
+	float farT = std::min(farPoint.x,farPoint.y);
+
+	if(farT < 0 || nearT >= 1.f) return false;
+
+	contactPoint = rayOrigin + rayDir*nearT;
+
+	if(nearPoint.x > nearPoint.y)
+	{
+		if(rayDir.x < 0)
+			contactNormal = {1,0};
+		else
+			contactNormal = {-1,0};
+	}
+	else if(nearPoint.x < nearPoint.y)
+	{
+		if(rayDir.y < 0)
+			contactNormal = {0,1};
+		else
+			contactNormal = {0,-1};
 	}
 	return true;
 }

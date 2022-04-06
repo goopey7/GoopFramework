@@ -7,9 +7,13 @@ class Collision
 {
 	public:
 		// returns true if point lies within Actor's aabb
-		static bool ActorVPoint(Actor* a, const sf::Vector2f point);
+		static bool ActorVPoint(const Actor* a, const sf::Vector2f point);
 
 		// returns true if actors' aabbs are colliding
-		static bool ActorVActor(Actor* a1, Actor* a2);
+		static bool ActorVActor(const Actor* a1, const Actor* a2);
+
+		// returns true if ray collides with actor's aabb
+		static bool RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir, const Actor* a,
+		sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime);
 };
 

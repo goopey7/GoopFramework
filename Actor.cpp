@@ -94,3 +94,13 @@ sf::Vector2u Actor::getTextureSize()
 	return sprite.getTexture()->getSize();
 }
 
+sf::Vector2f Actor::getCollisionBoxSize() const
+{
+	return sf::Vector2f(collisionBox.width,collisionBox.height);
+}
+
+sf::Vector2f Actor::getCollisionBoxPos() const
+{
+	return sf::Vector2f(collisionBox.left,collisionBox.top);
+}
+

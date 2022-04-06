@@ -27,6 +27,24 @@ void World::buildGraph()
 void World::update(const float dt)
 {
 	worldGraph.update(dt);
+
+	//TODO DELETE THIS TESTING
+	
+	sf::Vector2f rayPoint = {50.f,50.f};
+	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+	sf::Vector2f mousePosF = sf::Vector2f(mousePos.x,mousePos.y);
+	sf::Vector2f rayDir = mousePosF - rayPoint;
+
+	line[0] = rayPoint;
+	line[1] = mousePosF;
+
+	sf::Vector2f cp,cn;
+	float t;
+	if(Collision::RayVsActor(rayPoint,rayDir,collidingActors[0],cp,cn,t))
+	{
+		collidingActors[0]->onCollision();
+	}
+	else collidingActors[0]->onCollisionExit();
 }
 
 void World::fixedUpdate(const float dt)
@@ -59,6 +77,7 @@ void World::fixedUpdate(const float dt)
 void World::draw()
 {
 	window.draw(worldGraph);
+	window.draw(line,2,sf::Lines);
 }
 
 World::~World()
