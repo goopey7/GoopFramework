@@ -61,6 +61,8 @@ class World : private sf::NonCopyable
 
 		//TODO DELETE TESTING
 		sf::Vertex line[2];
+		sf::CircleShape contactPoint;
+		sf::Vertex contactNormal[2];
 };
 
 // collision should only be enabled if the node being passed in is an actor
