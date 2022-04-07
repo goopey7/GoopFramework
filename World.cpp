@@ -32,21 +32,18 @@ void World::update(const float dt)
 	c.setFillColor(sf::Color::Magenta);
 	c.setRadius(3.f);
 
-
 	// check dynamic vs static collisions
 	for(int i=0;i<dynamicCollidingActors.size();i++)
 	{
 		for(int j=0;j<collidingActors.size();j++)
 		{
 			sf::Vector2f cp,cn;
-			float ct;
+			float ct = 0.f;
 			if(Collision::MovingActorVActor(dynamicCollidingActors[i],collidingActors[j],cp,cn,ct,dt))
 			{
 				sf::Vector2f vel = dynamicCollidingActors[i]->getVelocity();
-				vel.x += cn.x * std::abs(vel.x) * (1.f-ct);
-				vel.y += cn.y * std::abs(vel.y) * (1.f-ct);
-				dynamicCollidingActors[i]->setVelocity(vel);
-				//dynamicCollidingActors[i]->setVelocity(sf::Vector2f(0.f,0.f));
+				sf::Vector2f newVel = Vector::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
+				dynamicCollidingActors[i]->setVelocity(vel + newVel);
 				c.setOrigin(c.getRadius()/2.f,c.getRadius()/2.f);
 				c.setPosition(cp);
 				norm[0] = cp;

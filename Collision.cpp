@@ -101,7 +101,7 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 
 	if(RayVsActor(mA->getWorldPosition() + mATopLeft + mA->getCollisionBoxSize() / 2.f, mA->getVelocity() * dt,&expandedBox,contactPoint,contactNormal,hitTime))
 	{
-		if(std::abs(hitTime) >= 0.f)
+		if(std::abs(hitTime) >= 0.f && std::abs(hitTime) <= 1.f)
 			return true;
 	}
 
