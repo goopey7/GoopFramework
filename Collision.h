@@ -13,7 +13,12 @@ class Collision
 		static bool ActorVActor(const Actor* a1, const Actor* a2);
 
 		// returns true if ray collides with actor's aabb
-		static bool RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir, const Actor* a,
-		sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime);
+		static bool RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir,
+				const Actor* a,
+				sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime);
+
+		// moving rect vs static rect
+		static bool MovingActorVActor(const Actor* mA, const Actor* sA,
+				sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt);
 };
 

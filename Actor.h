@@ -17,6 +17,8 @@ class Actor : public Node
 		virtual void fixedUpateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 		virtual unsigned int getCategory() const override;
+		sf::Vector2f getVelocity() const;
+		void setVelocity(sf::Vector2f vel);
 		sf::FloatRect getCollisionBox() const;
 		sf::Vector2f getCollisionBoxSize() const;
 		sf::Vector2f getCollisionBoxPos() const;
@@ -41,10 +43,11 @@ class Actor : public Node
 		const TextureHolder& textures;
 
 		sf::FloatRect collisionBox;
-		bool bCollisionEnabled = false;
 
 		sf::RectangleShape box;
 		bool bDebugMode = false;
+
+		sf::Vector2f velocity;
 
 	private:
 };

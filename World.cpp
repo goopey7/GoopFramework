@@ -27,36 +27,6 @@ void World::buildGraph()
 void World::update(const float dt)
 {
 	worldGraph.update(dt);
-
-	//TODO DELETE THIS TESTING
-	
-	sf::Vector2f rayPoint = {50.f,50.f};
-	sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-	sf::Vector2f mousePosF = sf::Vector2f(mousePos.x,mousePos.y);
-	sf::Vector2f rayDir = mousePosF - rayPoint;
-
-	line[0] = rayPoint;
-	line[1] = mousePosF;
-
-	sf::Vector2f cp,cn;
-	float t;
-	if(Collision::RayVsActor(rayPoint,rayDir,collidingActors[0],cp,cn,t))
-	{
-		collidingActors[0]->onCollision();
-		contactPoint.setRadius(15.f);
-		contactPoint.setFillColor(sf::Color::Green);
-		contactPoint.setOrigin(15.f, 15.f);
-		contactPoint.setPosition(cp);
-		contactNormal[0] = cp;
-		contactNormal[1] = cp + cn * 1000.f;
-	}
-	else
-	{
-		collidingActors[0]->onCollisionExit();
-		contactPoint.setRadius(0.f);
-		contactNormal[0] = sf::Vector2f(0.f,0.f);
-		contactNormal[1] = sf::Vector2f(0.f,0.f);
-	}
 }
 
 void World::fixedUpdate(const float dt)
@@ -67,20 +37,16 @@ void World::fixedUpdate(const float dt)
 
 	worldGraph.fixedUpdate(dt);
 
-	// check collisions
-	for(int i=0;i<collidingActors.size()-1;i++)
+	// check dynamic vs static collisions
+	for(int i=0;i<dynamicCollidingActors.size();i++)
 	{
-		for(int j=i+1; j<collidingActors.size();j++)
+		for(int j=0;j<collidingActors.size();j++)
 		{
-			if(Collision::ActorVActor(collidingActors[i],collidingActors[j]))
+			sf::Vector2f cp,cn;
+			float ct;
+			if(Collision::MovingActorVActor(dynamicCollidingActors[i],collidingActors[j],cp,cn,ct,dt))
 			{
-				collidingActors[i]->onCollision();
-				collidingActors[j]->onCollision();
-			}
-			else
-			{
-				collidingActors[i]->onCollisionExit();
-				collidingActors[j]->onCollisionExit();
+				dynamicCollidingActors[i]->setVelocity({0.f,0.f});
 			}
 		}
 	}
@@ -89,9 +55,6 @@ void World::fixedUpdate(const float dt)
 void World::draw()
 {
 	window.draw(worldGraph);
-	window.draw(line,2,sf::Lines);
-	window.draw(contactPoint);
-	window.draw(contactNormal,2,sf::Lines);
 }
 
 World::~World()

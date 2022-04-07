@@ -80,3 +80,28 @@ bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& ra
 	return true;
 }
 
+bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt)
+{
+	if(mA->getVelocity().x == 0.f || mA->getVelocity().y == 0.f)
+		return false;
+
+	sf::Vector2f sATopLeft = sf::Vector2f(sA->getCollisionBox().left , sA->getCollisionBox().top);
+	sf::Vector2f mATopLeft = sf::Vector2f(mA->getCollisionBox().left , mA->getCollisionBox().top);
+
+	sf::FloatRect expandedRect = 
+		sf::FloatRect(sA->getWorldPosition() + sATopLeft - mA->getCollisionBoxSize() / 2.f,
+		mA->getCollisionBoxSize() + sA->getCollisionBoxSize());
+
+	// TODO CLEAN THIS AWFULNESS UP
+	TextureHolder t;
+	Actor expandedBox(t);
+	expandedBox.setCollisionBox(expandedRect);
+	// -------------------------------
+
+	if(RayVsActor(mA->getWorldPosition() + mATopLeft + mA->getCollisionBoxSize() / 2.f, mA->getVelocity() * dt,&expandedBox,contactPoint,contactNormal,hitTime))
+	{ return true;
+	}
+
+	return false;
+}
+

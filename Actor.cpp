@@ -21,6 +21,7 @@ void Actor::updateCurrent(const float dt)
 
 void Actor::fixedUpateCurrent(const float dt)
 {
+	move(velocity*dt);
 }
 
 void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const { target.draw(sprite,states);
@@ -102,5 +103,15 @@ sf::Vector2f Actor::getCollisionBoxSize() const
 sf::Vector2f Actor::getCollisionBoxPos() const
 {
 	return sf::Vector2f(collisionBox.left,collisionBox.top);
+}
+
+sf::Vector2f Actor::getVelocity() const
+{
+	return velocity;
+}
+
+void Actor::setVelocity(sf::Vector2f vel)
+{
+	velocity = vel;
 }
 
