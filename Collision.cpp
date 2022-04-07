@@ -36,17 +36,13 @@ bool Collision::ActorVActor(const Actor* a1, const Actor* a2)
 	return true;
 }
 
-// divides member-wise left/right
-sf::Vector2f divide(sf::Vector2f v1, sf::Vector2f v2)
-{
-	return sf::Vector2f(v1.x/v2.x,v1.y/v2.y);
-}
+
 
 bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir, const Actor* a,
 		sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime)
 {
-	sf::Vector2f nearPoint = divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
-	sf::Vector2f farPoint = divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
+	sf::Vector2f nearPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
+	sf::Vector2f farPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
 
 	// swap components around so they actually are near and far
 	if(nearPoint.x > farPoint.x) std::swap(nearPoint.x,farPoint.x);
@@ -99,7 +95,8 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 	// -------------------------------
 
 	if(RayVsActor(mA->getWorldPosition() + mATopLeft + mA->getCollisionBoxSize() / 2.f, mA->getVelocity() * dt,&expandedBox,contactPoint,contactNormal,hitTime))
-	{ return true;
+	{
+		return true;
 	}
 
 	return false;

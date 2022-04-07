@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "Vector.h"
 
 class Collision
 {

@@ -13,3 +13,13 @@ sf::Vector2f Vector::normalize(sf::Vector2f v)
 	return v / size(v);
 }
 
+sf::Vector2f Vector::divide(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return sf::Vector2f(v1.x/v2.x,v1.y/v2.y);
+}
+
+sf::Vector2f Vector::multiply(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return sf::Vector2f(v1.x*v2.x,v1.y*v2.y);
+}
+

@@ -6,6 +6,7 @@
 //**************************************************************************************
 
 #include "World.h"
+#include "Vector.h"
 
 World::World(sf::RenderWindow& window)
 	: window(window),spawnPos(100.f,100.f)
@@ -27,15 +28,6 @@ void World::buildGraph()
 void World::update(const float dt)
 {
 	worldGraph.update(dt);
-}
-
-void World::fixedUpdate(const float dt)
-{
-	// Broadcast commands to sceneGraph
-	while(!commandQueue.isEmpty())
-		worldGraph.onCommand(commandQueue.pop(),dt);
-
-	worldGraph.fixedUpdate(dt);
 
 	// check dynamic vs static collisions
 	for(int i=0;i<dynamicCollidingActors.size();i++)
@@ -46,10 +38,21 @@ void World::fixedUpdate(const float dt)
 			float ct;
 			if(Collision::MovingActorVActor(dynamicCollidingActors[i],collidingActors[j],cp,cn,ct,dt))
 			{
-				dynamicCollidingActors[i]->setVelocity({0.f,0.f});
+				sf::Vector2f vel = dynamicCollidingActors[i]->getVelocity();
+				vel += Vector::multiply(cn , sf::Vector2f(std::abs(vel.x),std::abs(vel.y)))*(1.f-ct); 
+				dynamicCollidingActors[i]->setVelocity(vel);
 			}
 		}
 	}
+}
+
+void World::fixedUpdate(const float dt)
+{
+	// Broadcast commands to sceneGraph
+	while(!commandQueue.isEmpty())
+		worldGraph.onCommand(commandQueue.pop(),dt);
+
+	worldGraph.fixedUpdate(dt);
 }
 
 void World::draw()
