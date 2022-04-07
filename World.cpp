@@ -29,6 +29,10 @@ void World::update(const float dt)
 {
 	worldGraph.update(dt);
 
+	c.setFillColor(sf::Color::Magenta);
+	c.setRadius(3.f);
+
+
 	// check dynamic vs static collisions
 	for(int i=0;i<dynamicCollidingActors.size();i++)
 	{
@@ -39,8 +43,14 @@ void World::update(const float dt)
 			if(Collision::MovingActorVActor(dynamicCollidingActors[i],collidingActors[j],cp,cn,ct,dt))
 			{
 				sf::Vector2f vel = dynamicCollidingActors[i]->getVelocity();
-				vel += Vector::multiply(cn , sf::Vector2f(std::abs(vel.x),std::abs(vel.y)))*(1.f-ct); 
+				vel.x += cn.x * std::abs(vel.x) * (1.f-ct);
+				vel.y += cn.y * std::abs(vel.y) * (1.f-ct);
 				dynamicCollidingActors[i]->setVelocity(vel);
+				//dynamicCollidingActors[i]->setVelocity(sf::Vector2f(0.f,0.f));
+				c.setOrigin(c.getRadius()/2.f,c.getRadius()/2.f);
+				c.setPosition(cp);
+				norm[0] = cp;
+				norm[1] = cp + cn * 100.f;
 			}
 		}
 	}
@@ -58,6 +68,8 @@ void World::fixedUpdate(const float dt)
 void World::draw()
 {
 	window.draw(worldGraph);
+	window.draw(c);
+	window.draw(norm,2,sf::Lines);
 }
 
 World::~World()

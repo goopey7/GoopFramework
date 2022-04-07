@@ -59,6 +59,11 @@ class World : private sf::NonCopyable
 		std::vector<Actor*> collidingActors;
 		std::vector<Actor*> dynamicCollidingActors;
 		CommandQueue commandQueue;
+
+		//TODO DELETE
+		sf::CircleShape c;
+		sf::Vertex norm[2];
+		//-----------
 };
 
 // collision should only be enabled if the node being passed in is an actor

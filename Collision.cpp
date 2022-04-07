@@ -1,6 +1,7 @@
 //Copyright Sam Collier 2022
 
 #include "Collision.h"
+#include <cmath>
 
 bool Collision::ActorVPoint(const Actor* a, const sf::Vector2f point)
 {
@@ -44,6 +45,9 @@ bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& ra
 	sf::Vector2f nearPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
 	sf::Vector2f farPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
 
+	if (std::isnan(farPoint.y) || std::isnan(farPoint.y)) return false;
+	if (std::isnan(nearPoint.y) || std::isnan(nearPoint.x)) return false;
+
 	// swap components around so they actually are near and far
 	if(nearPoint.x > farPoint.x) std::swap(nearPoint.x,farPoint.x);
 	if(nearPoint.y > farPoint.y) std::swap(nearPoint.y,farPoint.y);
@@ -52,10 +56,9 @@ bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& ra
 		return false;
 
 	float nearT = std::max(nearPoint.x,nearPoint.y);
-	hitTime = nearT;
 	float farT = std::min(farPoint.x,farPoint.y);
 
-	if(farT < 0 || nearT >= 1.f) return false;
+	if(farT < 0 || nearT > 1.f) return false;
 
 	contactPoint = rayOrigin + rayDir*nearT;
 
@@ -73,12 +76,13 @@ bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& ra
 		else
 			contactNormal = {0,-1};
 	}
+	hitTime = nearT;
 	return true;
 }
 
 bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt)
 {
-	if(mA->getVelocity().x == 0.f || mA->getVelocity().y == 0.f)
+	if(mA->getVelocity().x == 0.f && mA->getVelocity().y == 0.f)
 		return false;
 
 	sf::Vector2f sATopLeft = sf::Vector2f(sA->getCollisionBox().left , sA->getCollisionBox().top);
@@ -92,11 +96,13 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 	TextureHolder t;
 	Actor expandedBox(t);
 	expandedBox.setCollisionBox(expandedRect);
+	expandedBox.setPosition(0.f,0.f);
 	// -------------------------------
 
 	if(RayVsActor(mA->getWorldPosition() + mATopLeft + mA->getCollisionBoxSize() / 2.f, mA->getVelocity() * dt,&expandedBox,contactPoint,contactNormal,hitTime))
 	{
-		return true;
+		if(std::abs(hitTime) >= 0.f)
+			return true;
 	}
 
 	return false;
