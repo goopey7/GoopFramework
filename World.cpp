@@ -28,29 +28,6 @@ void World::buildGraph()
 void World::update(const float dt)
 {
 	worldGraph.update(dt);
-
-	c.setFillColor(sf::Color::Magenta);
-	c.setRadius(3.f);
-
-	// check dynamic vs static collisions
-	for(int i=0;i<dynamicCollidingActors.size();i++)
-	{
-		for(int j=0;j<collidingActors.size();j++)
-		{
-			sf::Vector2f cp,cn;
-			float ct = 0.f;
-			if(Collision::MovingActorVActor(dynamicCollidingActors[i],collidingActors[j],cp,cn,ct,dt))
-			{
-				sf::Vector2f vel = dynamicCollidingActors[i]->getVelocity();
-				sf::Vector2f newVel = Vector::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
-				dynamicCollidingActors[i]->setVelocity(vel + newVel);
-				c.setOrigin(c.getRadius()/2.f,c.getRadius()/2.f);
-				c.setPosition(cp);
-				norm[0] = cp;
-				norm[1] = cp + cn * 100.f;
-			}
-		}
-	}
 }
 
 void World::fixedUpdate(const float dt)
@@ -59,14 +36,21 @@ void World::fixedUpdate(const float dt)
 	while(!commandQueue.isEmpty())
 		worldGraph.onCommand(commandQueue.pop(),dt);
 
+	// check dynamic vs static collisions
+	for(int i=0;i<dynamicCollidingActors.size();i++)
+	{
+		for(int j=0;j<collidingActors.size();j++)
+		{
+			Collision::ResolveDynamicVStatic(dynamicCollidingActors[i], collidingActors[j], dt);
+		}
+	}
+
 	worldGraph.fixedUpdate(dt);
 }
 
 void World::draw()
 {
 	window.draw(worldGraph);
-	window.draw(c);
-	window.draw(norm,2,sf::Lines);
 }
 
 World::~World()
@@ -78,7 +62,7 @@ CommandQueue& World::getCommandQueue()
 	return commandQueue;
 }
 
-void World::loadFromFile(const char* fileName, TextureHolder& textures)
+void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures)
 {
 	using nlohmann::json;
 	std::ifstream file(fileName);
@@ -97,7 +81,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 	int mapWidth = map["width"], mapHeight = map["height"];
 	int tileWidth = map["tilewidth"], tileHeight = map["tileheight"];
 
-	int textureID = 0;
+	unsigned int textureID = numTextures;
 
 	for(auto pair : tileSets)
 	{
@@ -123,7 +107,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 									(layout[i]-1)*tileWidth,0,
 									tileWidth,tileHeight);
 						tile->setTextureRect(texRect);
-						addNode(&tile,Object,false);
+						addNode(&tile,Tile);
 					}
 					i++;
 				}
@@ -139,11 +123,11 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures)
 					std::unique_ptr<Actor> colBox(new Actor(textures));
 					colBox->setPosition(0.f,0.f);
 					colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
-					addNode(&colBox,Object,true);
+					colBox->enableCollision(true);
+					addNode(&colBox,Object);
 				}
 			}
 		}
-		
 	}
 }
 

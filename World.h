@@ -42,9 +42,9 @@ class World : private sf::NonCopyable
 		virtual void buildGraph();
 
 		template <typename NodeChild>
-		void addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled=false, bool bDynamicEnabled=false);
+		void addNode(std::unique_ptr<NodeChild>* node, Layer layer);
 
-		void loadFromFile(const char* fileName, TextureHolder& textures);
+		void loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures);
 
 	protected:
 		sf::Vector2f spawnPos;
@@ -59,21 +59,24 @@ class World : private sf::NonCopyable
 		std::vector<Actor*> collidingActors;
 		std::vector<Actor*> dynamicCollidingActors;
 		CommandQueue commandQueue;
-
-		//TODO DELETE
-		sf::CircleShape c;
-		sf::Vertex norm[2];
-		//-----------
 };
 
 // collision should only be enabled if the node being passed in is an actor
 template <typename NodeChild>
-void World::addNode(std::unique_ptr<NodeChild>* node, Layer layer, bool bCollisionEnabled, bool bDynamicEnabled)
+void World::addNode(std::unique_ptr<NodeChild>* node, Layer layer)
 {
-	if(bCollisionEnabled && !bDynamicEnabled)
-		collidingActors.push_back(reinterpret_cast<Actor*>(node->get()));
-	if(bCollisionEnabled && bDynamicEnabled)
-		dynamicCollidingActors.push_back(reinterpret_cast<Actor*>(node->get()));
+	Actor* a = reinterpret_cast<Actor*>(node->get());
+	if(a != nullptr)
+	{
+		if(a->isDynamic())
+		{
+			dynamicCollidingActors.push_back(a);
+		}
+		else if(a->collisionEnabled())
+		{
+			collidingActors.push_back(a);
+		}
+	}
 	worldLayers[layer]->attachChild(std::move(*node));
 }
 

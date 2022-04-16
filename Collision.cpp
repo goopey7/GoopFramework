@@ -108,3 +108,16 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 	return false;
 }
 
+void Collision::ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt)
+{
+	sf::Vector2f cp,cn;
+	float ct = 0.f;
+	if(Collision::MovingActorVActor(dA,sA,cp,cn,ct,dt))
+	{
+		sf::Vector2f vel = dA->getVelocity();
+		sf::Vector2f newVel = Vector::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
+		dA->setVelocity(vel + newVel);
+		dA->onCollisionEnter(sA,cp,cn,ct,dt);
+	}
+}
+

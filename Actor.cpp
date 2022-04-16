@@ -80,19 +80,10 @@ void Actor::updateBox()
 	box.setSize(sf::Vector2f(collisionBox.width,collisionBox.height));
 }
 
-
-void Actor::onCollision()
-{
-
-}
-
-void Actor::onCollisionExit()
-{
-}
-
 sf::Vector2u Actor::getTextureSize()
 {
-	return sprite.getTexture()->getSize();
+	sf::IntRect r = sprite.getTextureRect();
+	return sf::Vector2u(r.width,r.height);
 }
 
 sf::Vector2f Actor::getCollisionBoxSize() const
@@ -113,5 +104,29 @@ sf::Vector2f Actor::getVelocity() const
 void Actor::setVelocity(sf::Vector2f vel)
 {
 	velocity = vel;
+}
+
+bool Actor::isDynamic()
+{
+	return bIsDynamic;
+}
+
+void Actor::setIsDynamic(bool isDynamic)
+{
+	bIsDynamic = isDynamic;
+}
+
+bool Actor::collisionEnabled()
+{
+	return bCollisionEnabled;
+}
+
+void Actor::enableCollision(bool shouldCollide)
+{
+	bCollisionEnabled = shouldCollide;
+}
+
+void Actor::onCollisionEnter(Actor* other, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt)
+{
 }
 

@@ -21,5 +21,8 @@ class Collision
 		// moving rect vs static rect
 		static bool MovingActorVActor(const Actor* mA, const Actor* sA,
 				sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt);
+
+		// resolve dynamic v static collisions
+		static void ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt);
 };
 

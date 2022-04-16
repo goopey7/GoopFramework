@@ -30,14 +30,13 @@ class Actor : public Node
 		void scale(sf::Vector2f scaleFactor);
 		void scale(float scaleX, float scaleY);
 		void updateBox();
+		bool isDynamic();
+		void setIsDynamic(bool isDynamic);
+		bool collisionEnabled();
+		void enableCollision(bool shouldCollide);
 
-		bool isColliding(Actor* a);
-		bool hasBegunCollision(Actor* a);
+		virtual void onCollisionEnter(Actor* other, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt);
 
-		virtual void onCollision();
-		virtual void onCollisionExit();
-
-		
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;
@@ -48,6 +47,9 @@ class Actor : public Node
 		bool bDebugMode = false;
 
 		sf::Vector2f velocity;
+
+		bool bCollisionEnabled=false;
+		bool bIsDynamic=false;
 
 	private:
 };
