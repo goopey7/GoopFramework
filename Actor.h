@@ -16,7 +16,7 @@ class Actor : public Node
 		~Actor();
 
 		virtual void updateCurrent(const float dt) override;
-		virtual void fixedUpateCurrent(const float dt) override;
+		virtual void fixedUpdateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 		virtual unsigned int getCategory() const override;
 		sf::Vector2f getVelocity() const;

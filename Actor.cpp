@@ -19,7 +19,7 @@ void Actor::updateCurrent(const float dt)
 {
 }
 
-void Actor::fixedUpateCurrent(const float dt)
+void Actor::fixedUpdateCurrent(const float dt)
 {
 	move(velocity*dt);
 	rotate(rotationSpeed*dt);

@@ -43,7 +43,7 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const{};
 
 		// children are expected to override their respective 'current' methods
-		virtual void fixedUpateCurrent(const float dt){};
+		virtual void fixedUpdateCurrent(const float dt){};
 		void fixedUpdateChildren(const float dt);
 		virtual void updateCurrent(const float dt){};
 		void updateChildren(const float dt);

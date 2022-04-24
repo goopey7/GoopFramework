@@ -67,7 +67,7 @@ void Node::updateChildren(const float dt)
 
 void Node::fixedUpdate(const float dt)
 {
-	fixedUpateCurrent(dt);
+	fixedUpdateCurrent(dt);
 	fixedUpdateChildren(dt);
 } 
 
