@@ -23,3 +23,18 @@ sf::Vector2f Vector::multiply(sf::Vector2f v1, sf::Vector2f v2)
 	return sf::Vector2f(v1.x*v2.x,v1.y*v2.y);
 }
 
+float Vector::angle(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return acosf(dot(v1,v2)/(size(v1)*size(v2)));
+}
+
+float Vector::dot(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return v1.x*v2.x+v1.y*v2.y;
+}
+
+float Vector::distance(sf::Vector2f v1, sf::Vector2f v2)
+{
+	return sqrtf(powf(v2.x-v1.x,2.f) + powf(v2.y-v1.y,2.f));
+}
+

@@ -3,6 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#define PI 3.14159265f
+
 class Vector
 {
 	public:
@@ -14,5 +16,11 @@ class Vector
 
 		// multiply member-wise
 		static sf::Vector2f multiply(sf::Vector2f v1, sf::Vector2f v2);
+
+		static float angle(sf::Vector2f v1, sf::Vector2f v2);
+
+		static float dot(sf::Vector2f v1, sf::Vector2f v2);
+
+		static float distance(sf::Vector2f v1, sf::Vector2f v2);
 };
 
