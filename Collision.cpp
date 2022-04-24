@@ -94,7 +94,7 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 
 	// TODO CLEAN THIS AWFULNESS UP
 	TextureHolder t;
-	Actor expandedBox(t);
+	Actor expandedBox(t,nullptr);
 	expandedBox.setCollisionBox(expandedRect);
 	expandedBox.setPosition(0.f,0.f);
 	// -------------------------------

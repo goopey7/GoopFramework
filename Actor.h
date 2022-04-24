@@ -7,10 +7,12 @@
 
 typedef ResourceHolder<sf::Texture,unsigned int> TextureHolder;
 
+class World;
+
 class Actor : public Node
 {
 	public:
-		Actor(const TextureHolder& textures);
+		Actor(const TextureHolder& textures, World* world);
 		~Actor();
 
 		virtual void updateCurrent(const float dt) override;
@@ -34,6 +36,9 @@ class Actor : public Node
 		void setIsDynamic(bool isDynamic);
 		bool collisionEnabled();
 		void enableCollision(bool shouldCollide);
+		const TextureHolder& getTextures() const;
+
+		World* getWorld();
 
 		virtual void onCollisionEnter(Actor* other, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt);
 
@@ -53,5 +58,6 @@ class Actor : public Node
 		bool bIsDynamic=false;
 
 	private:
+		World* world;
 };
 

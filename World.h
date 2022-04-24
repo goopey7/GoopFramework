@@ -19,7 +19,7 @@
 
 class World : private sf::NonCopyable
 {
-	protected:
+	public:
 		// LayerCount will naturally return the number of layers before it
 		// enums start at 0
 		enum Layer
@@ -45,6 +45,8 @@ class World : private sf::NonCopyable
 		void addNode(std::unique_ptr<NodeChild>* node, Layer layer);
 
 		void loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures);
+
+		sf::RenderWindow* getWindow();
 
 	protected:
 		sf::Vector2f spawnPos;

@@ -100,7 +100,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 				{
 					if(layout[i] != 0)
 					{
-						std::unique_ptr<Actor> tile(new Actor(textures));
+						std::unique_ptr<Actor> tile(new Actor(textures,this));
 						tile->setTexture(textureID-1);
 						tile->setPosition(x*tileWidth,y*tileHeight);
 						sf::IntRect texRect = sf::IntRect(
@@ -120,7 +120,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 				sf::FloatRect rect = sf::FloatRect(object["x"],object["y"],object["width"],object["height"]);
 				if(object["properties"].at(0)["value"] == "block")
 				{
-					std::unique_ptr<Actor> colBox(new Actor(textures));
+					std::unique_ptr<Actor> colBox(new Actor(textures,this));
 					colBox->setPosition(0.f,0.f);
 					colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
 					colBox->enableCollision(true);
@@ -129,5 +129,10 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 			}
 		}
 	}
+}
+
+sf::RenderWindow* World::getWindow()
+{
+	return &window;
 }
 

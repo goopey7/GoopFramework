@@ -2,8 +2,8 @@
 
 #include "Actor.h"
 
-Actor::Actor(const TextureHolder& textures)
-	: textures(textures)
+Actor::Actor(const TextureHolder& textures, World* world)
+	: textures(textures), world(world)
 {
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Red);
@@ -129,5 +129,15 @@ void Actor::enableCollision(bool shouldCollide)
 
 void Actor::onCollisionEnter(Actor* other, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt)
 {
+}
+
+World* Actor::getWorld()
+{
+	return world;
+}
+
+const TextureHolder& Actor::getTextures() const
+{
+	return textures;
 }
 
