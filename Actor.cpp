@@ -22,6 +22,7 @@ void Actor::updateCurrent(const float dt)
 void Actor::fixedUpateCurrent(const float dt)
 {
 	move(velocity*dt);
+	rotate(rotationSpeed*dt);
 }
 
 void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const { target.draw(sprite,states);

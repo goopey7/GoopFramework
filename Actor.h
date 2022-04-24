@@ -47,6 +47,7 @@ class Actor : public Node
 		bool bDebugMode = false;
 
 		sf::Vector2f velocity;
+		float rotationSpeed = 0.f;
 
 		bool bCollisionEnabled=false;
 		bool bIsDynamic=false;
