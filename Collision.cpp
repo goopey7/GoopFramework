@@ -42,8 +42,8 @@ bool Collision::ActorVActor(const Actor* a1, const Actor* a2)
 bool Collision::RayVsActor(const sf::Vector2f& rayOrigin, const sf::Vector2f& rayDir, const Actor* a,
 		sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime)
 {
-	sf::Vector2f nearPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
-	sf::Vector2f farPoint = Vector::divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
+	sf::Vector2f nearPoint = Vector<float>::divide(a->getWorldPosition() + a->getCollisionBoxPos() - rayOrigin, rayDir);
+	sf::Vector2f farPoint = Vector<float>::divide(a->getWorldPosition() + a->getCollisionBoxPos() + a->getCollisionBoxSize() - rayOrigin, rayDir);
 
 	if (std::isnan(farPoint.y) || std::isnan(farPoint.y)) return false;
 	if (std::isnan(nearPoint.y) || std::isnan(nearPoint.x)) return false;
@@ -115,7 +115,7 @@ void Collision::ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt)
 	if(Collision::MovingActorVActor(dA,sA,cp,cn,ct,dt))
 	{
 		sf::Vector2f vel = dA->getVelocity();
-		sf::Vector2f newVel = Vector::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
+		sf::Vector2f newVel = Vector<float>::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
 		dA->setVelocity(vel + newVel);
 		dA->onCollisionEnter(sA,cp,cn,ct,dt);
 	}
