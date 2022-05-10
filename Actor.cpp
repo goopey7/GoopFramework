@@ -25,7 +25,9 @@ void Actor::fixedUpdateCurrent(const float dt)
 	rotate(rotationSpeed*dt);
 }
 
-void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const { target.draw(sprite,states);
+void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const
+{
+	target.draw(sprite,states);
 	if(bDebugMode)
 		target.draw(box,states);
 }

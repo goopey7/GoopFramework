@@ -5,7 +5,7 @@
 
 float Vector::size(sf::Vector2f v)
 {
-	return sqrtf(v.x*v.x+v.y*v.y);
+	return sqrtf(powf(v.x,2.f)+powf(v.y,2.f));
 }
 
 sf::Vector2f Vector::normalize(sf::Vector2f v)
