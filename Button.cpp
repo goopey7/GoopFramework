@@ -2,15 +2,14 @@
 
 #include "Button.h"
 
-Button::Button(sf::RenderWindow& window, sf::Vector2f topLeft, sf::Vector2f bottomRight, std::string textStr)
-	: window(&window)
+Button::Button(sf::RenderWindow& window, sf::Vector2f topLeft, sf::Vector2f bottomRight, sf::Font& font, std::string textStr)
+	: window(&window), font(font)
 {
 	box.setPosition(topLeft);
 	box.setSize(bottomRight-topLeft);
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Green);
 	box.setOutlineThickness(10.f);
-	font.loadFromFile("font/arial.ttf");
 	text.setFont(font);
 	text.setString(textStr);
 	text.setCharacterSize(24);
