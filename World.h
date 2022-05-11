@@ -28,6 +28,7 @@ class World : private sf::NonCopyable
 			Tile,
 			Object,
 			Entity,
+			HUD,
 			layerCount
 		};
 

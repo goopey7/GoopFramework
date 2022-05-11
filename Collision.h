@@ -24,5 +24,7 @@ class Collision
 
 		// resolve dynamic v static collisions
 		static void ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt);
+
+		static bool RectVPoint(const sf::RectangleShape* r, const sf::Vector2f point);
 };
 

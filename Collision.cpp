@@ -121,3 +121,9 @@ void Collision::ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt)
 	}
 }
 
+bool Collision::RectVPoint(const sf::RectangleShape* r, const sf::Vector2f point)
+{
+	return (point.x >= r->getPosition().x && point.x <= r->getPosition().x + r->getSize().x
+			&& point.y >= r->getPosition().y && point.y <= r->getPosition().y + r->getSize().y);
+}
+
