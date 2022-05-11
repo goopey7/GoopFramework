@@ -2,19 +2,19 @@
 
 #include "Button.h"
 
-Button::Button(sf::RenderWindow& window, sf::Vector2f topLeft, sf::Vector2f bottomRight, sf::Font& font, std::string textStr)
+Button::Button(sf::RenderWindow& window, sf::Vector2f topLeft, sf::Vector2f size, sf::Font& font, std::string textStr)
 	: window(&window), font(font)
 {
 	box.setPosition(topLeft);
-	box.setSize(bottomRight-topLeft);
+	box.setSize(size);
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Green);
-	box.setOutlineThickness(10.f);
+	box.setOutlineThickness(1.f);
 	text.setFont(font);
 	text.setString(textStr);
-	text.setCharacterSize(24);
+	text.setCharacterSize(15.f);
 	text.setOrigin(text.getGlobalBounds().width/2.f,text.getGlobalBounds().height/2.f);
-	text.setPosition(box.getPosition()+Vector<float>::divide(box.getSize(),2.f));
+	text.setPosition(box.getPosition() + Vector<float>::divide(box.getSize(),2.f));
 }
 
 Button::~Button()

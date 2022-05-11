@@ -136,3 +136,8 @@ sf::RenderWindow* World::getWindow()
 	return &window;
 }
 
+float World::getViewScale()
+{
+	return viewScale;
+}
+

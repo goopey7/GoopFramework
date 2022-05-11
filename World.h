@@ -49,9 +49,12 @@ class World : private sf::NonCopyable
 
 		sf::RenderWindow* getWindow();
 
+		float getViewScale();
+
 	protected:
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
+		float viewScale = 0.15f;
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements
@@ -62,6 +65,7 @@ class World : private sf::NonCopyable
 		std::vector<Actor*> collidingActors;
 		std::vector<Actor*> dynamicCollidingActors;
 		CommandQueue commandQueue;
+
 };
 
 // collision should only be enabled if the node being passed in is an actor

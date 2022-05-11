@@ -16,7 +16,7 @@ class Vector
 
 		// divides member-wise v1/v2
 		static sf::Vector2f divide(sf::Vector2<T> v1, sf::Vector2<T> v2);
-		static sf::Vector2f divide(sf::Vector2<T> v, float s);
+		static sf::Vector2f divide(sf::Vector2<T> v, T s);
 
 		// multiply member-wise
 		static sf::Vector2<T> multiply(sf::Vector2<T> v1, sf::Vector2<T> v2);
@@ -71,7 +71,7 @@ T Vector<T>::distance(sf::Vector2<T> v1, sf::Vector2<T> v2)
 }
 
 template <typename T>
-sf::Vector2f Vector<T>::divide(sf::Vector2<T> v, float s)
+sf::Vector2f Vector<T>::divide(sf::Vector2<T> v, T s)
 {
 	return sf::Vector2f(v.x/s,v.y/s);
 }
