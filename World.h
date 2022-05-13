@@ -41,6 +41,7 @@ class World : private sf::NonCopyable
 		virtual void draw();
 		CommandQueue& getCommandQueue();
 		virtual void buildGraph();
+		virtual void loadResources();
 
 		template <typename NodeChild>
 		void addNode(std::unique_ptr<NodeChild>* node, Layer layer);

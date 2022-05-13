@@ -141,3 +141,7 @@ float World::getViewScale()
 	return viewScale;
 }
 
+void World::loadResources()
+{
+}
+
