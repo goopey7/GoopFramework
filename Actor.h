@@ -12,7 +12,7 @@ class World;
 class Actor : public Node
 {
 	public:
-		Actor(const TextureHolder& textures, World* world);
+		Actor(const TextureHolder& textures, World* currentWorld);
 		~Actor();
 
 		virtual void updateCurrent(const float dt) override;
@@ -57,7 +57,6 @@ class Actor : public Node
 		bool bCollisionEnabled=false;
 		bool bIsDynamic=false;
 
-	private:
-		World* world;
+		World* currentWorld;
 };
 

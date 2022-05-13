@@ -8,8 +8,8 @@
 #include "World.h"
 #include "Vector.h"
 
-World::World(sf::RenderWindow& window)
-	: window(window),spawnPos(100.f,100.f)
+World::World(sf::RenderWindow& window, std::unique_ptr<World>* currentWorld)
+	: window(window),currentWorld(currentWorld),spawnPos(100.f,100.f)
 {
 	buildGraph();
 }

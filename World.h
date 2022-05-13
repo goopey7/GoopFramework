@@ -33,12 +33,12 @@ class World : private sf::NonCopyable
 		};
 
 	public:
-		explicit World(sf::RenderWindow& window);
+		explicit World(sf::RenderWindow& window, std::unique_ptr<World>* currentWorld);
 		~World();
 		
-		void update(const float dt);
-		void fixedUpdate(const float dt);
-		void draw();
+		virtual void update(const float dt);
+		virtual void fixedUpdate(const float dt);
+		virtual void draw();
 		CommandQueue& getCommandQueue();
 		virtual void buildGraph();
 
@@ -55,6 +55,7 @@ class World : private sf::NonCopyable
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
 		float viewScale = 0.15f;
+		std::unique_ptr<World>* currentWorld;
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements
