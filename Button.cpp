@@ -21,17 +21,86 @@ Button::~Button()
 {
 }
 
-bool Button::isClicked()
+bool Button::isHovered()
 {
 	sf::Vector2i mousePixelCoord = sf::Mouse::getPosition(*window);
 	sf::Vector2f mousePos = window->mapPixelToCoords(mousePixelCoord);
-	return sf::Mouse::isButtonPressed(sf::Mouse::Left)
-		&& Collision::RectVPoint(&box,mousePos);
+	return Collision::RectVPoint(&box,mousePos);
+}
+
+bool Button::isClicked()
+{
+	if(bWasClicked)
+		return false;
+	bWasClicked = isHovered() && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	return bWasClicked;
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(box,states);
 	target.draw(text,states);
+}
+
+bool Button::isHeld()
+{
+	return bWasClicked && sf::Mouse::isButtonPressed(sf::Mouse::Left);
+}
+
+bool Button::isReleased()
+{
+	if(!bWasClicked)
+		return false;
+	if(!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		bWasClicked = false;
+		return true;
+	}
+	else return false;
+}
+
+bool Button::isHovered(sf::Color fillColor)
+{
+	if(isHovered())
+	{
+		box.setFillColor(fillColor);
+		return true;
+	}
+	return false;
+}
+
+bool Button::isClicked(sf::Color fillColor)
+{
+	if(isClicked())
+	{
+		box.setFillColor(fillColor);
+		return true;
+	}
+	return false;
+}
+
+bool Button::isHeld(sf::Color fillColor)
+{
+	if(isHeld())
+	{
+		box.setFillColor(fillColor);
+		return true;
+	}
+	return false;
+}
+
+bool Button::isReleased(sf::Color fillColor)
+{
+	if(isReleased())
+	{
+		box.setFillColor(fillColor);
+		return true;
+	}
+	return false;
+}
+
+void Button::setFillColor(sf::Color fillColor)
+{
+	box.setFillColor(fillColor);
 }
 
