@@ -15,6 +15,7 @@ namespace Category
 		Actor = 1 << 2,
 		Enemy = 1 << 3,
 		Shuriken = 1 << 4,
+		EnemyBlock = 1 << 5,
 	};
 }
 // so for example

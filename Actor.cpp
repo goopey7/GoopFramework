@@ -34,7 +34,7 @@ void Actor::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states
 
 unsigned int Actor::getCategory() const
 {
-	return Category::Actor;
+	return category;
 }
 
 sf::FloatRect Actor::getCollisionBox() const
@@ -155,5 +155,10 @@ float Actor::getDamage()
 
 void Actor::onDynamicVsDynamicEnter(Actor* other)
 {
+}
+
+void Actor::setCategory(unsigned int category)
+{
+	this->category = category;
 }
 

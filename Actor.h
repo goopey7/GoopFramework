@@ -19,6 +19,7 @@ class Actor : public Node
 		virtual void fixedUpdateCurrent(const float dt) override;
 		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const override;
 		virtual unsigned int getCategory() const override;
+		void setCategory(unsigned int category);
 		sf::Vector2f getVelocity() const;
 		void setVelocity(sf::Vector2f vel);
 		sf::FloatRect getCollisionBox() const;
@@ -65,5 +66,7 @@ class Actor : public Node
 
 		float health = 100.f;
 		float damage = 10.f;
+
+		unsigned int category = Category::Actor;
 };
 

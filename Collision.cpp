@@ -110,6 +110,10 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 
 void Collision::ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt)
 {
+	bool canCollide = (!(dA->getCategory() & Category::Enemy) && !(sA->getCategory() & Category::EnemyBlock))
+				|| (dA->getCategory() & Category::Enemy);
+	if(!canCollide)
+		return;
 	sf::Vector2f cp,cn;
 	float ct = 0.f;
 	if(Collision::MovingActorVActor(dA,sA,cp,cn,ct,dt))
