@@ -21,6 +21,7 @@
 class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
 	public:
+		~Node();
 		typedef std::unique_ptr<Node> NodePtr;
 		void attachChild(NodePtr child);
 		NodePtr detachChild(const Node& node);
@@ -35,6 +36,11 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		// draw renders the entire node and children
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 
+		void die();
+		bool shouldDie() const;
+
+		void killChildren();
+
 	private:
 		std::vector<NodePtr> children;
 		Node* parent = nullptr;
@@ -47,4 +53,6 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		void fixedUpdateChildren(const float dt);
 		virtual void updateCurrent(const float dt){};
 		void updateChildren(const float dt);
+
+		bool bShouldDie = false;
 };

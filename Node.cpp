@@ -117,3 +117,30 @@ void Node::onCommand(const Command& command, const float dt)
 		child->onCommand(command,dt);
 }
 
+void Node::die()
+{
+	bShouldDie = true;
+}
+
+bool Node::shouldDie() const
+{
+	return bShouldDie;
+}
+
+void Node::killChildren()
+{
+	for(int i=0;i<children.size();i++)
+	{
+		children[i]->killChildren();
+		if(children[i]->shouldDie())
+		{
+			detachChild(*children[i].get());
+			//children[i].release();
+		}
+	}
+}
+
+Node::~Node()
+{
+}
+

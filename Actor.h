@@ -67,6 +67,7 @@ class Actor : public Node
 		float health = 100.f;
 		float damage = 10.f;
 
+
 		unsigned int category = Category::Actor;
 };
 

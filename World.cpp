@@ -75,6 +75,24 @@ void World::fixedUpdate(const float dt)
 	}
 
 	worldGraph.fixedUpdate(dt);
+
+	// any child wanting to die will die at this time
+	// this sounds very weird out of context lol
+	for(int i=0;i<dynamicCollidingActors.size();i++)
+	{
+		if(dynamicCollidingActors[i]->shouldDie())
+		{
+			dynamicCollidingActors.erase(dynamicCollidingActors.begin() + i);
+		}
+	}
+	for(int j=0;j<collidingActors.size();j++)
+	{
+		if(collidingActors[j]->shouldDie())
+		{
+			collidingActors.erase(collidingActors.begin() + j);
+		}
+	}
+	worldGraph.killChildren();
 }
 
 void World::draw()
