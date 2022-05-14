@@ -6,6 +6,7 @@
 //**************************************************************************************
 
 #include "Node.h"
+#include <iostream>
 
 void Node::attachChild(NodePtr child)
 {
@@ -51,6 +52,7 @@ void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		child->draw(target,states);
 	}
+
 }
 
 void Node::fixedUpdateChildren(const float dt)
@@ -141,6 +143,23 @@ void Node::killChildren()
 }
 
 Node::~Node()
+{
+}
+
+void Node::spawn(NodePtr* node)
+{
+	if(parent == nullptr)
+		toSpawn.push_back(node);
+	else
+		parent->spawn(node);
+}
+
+std::vector<Node::NodePtr*>& Node::getPendingSpawn()
+{
+	return toSpawn;
+}
+
+void Node::drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const
 {
 }
 

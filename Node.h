@@ -37,6 +37,8 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 
 		void die();
+		void spawn(NodePtr* node);
+		std::vector<NodePtr*>& getPendingSpawn();
 		bool shouldDie() const;
 
 		void killChildren();
@@ -46,7 +48,7 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		Node* parent = nullptr;
 
 		// only draws the current node but not it's children
-		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const{};
+		virtual void drawCurrent(sf::RenderTarget& target, const sf::RenderStates& states) const;
 
 		// children are expected to override their respective 'current' methods
 		virtual void fixedUpdateCurrent(const float dt){};
@@ -55,4 +57,6 @@ class Node : public sf::Transformable, public sf::Drawable, private sf::NonCopya
 		void updateChildren(const float dt);
 
 		bool bShouldDie = false;
+
+		std::vector<NodePtr*> toSpawn;
 };

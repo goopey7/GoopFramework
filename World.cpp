@@ -93,6 +93,14 @@ void World::fixedUpdate(const float dt)
 		}
 	}
 	worldGraph.killChildren();
+
+	// SPAWN AWAITING ITEMS
+	std::vector<Node::NodePtr*>* pendingSpawn = &worldGraph.getPendingSpawn();
+	for(int i=0;i<pendingSpawn->size();i++)
+	{
+		addNode(&*(*pendingSpawn)[i],Layer::Entity);
+	}
+	pendingSpawn->clear();
 }
 
 void World::draw()
