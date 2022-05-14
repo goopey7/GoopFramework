@@ -13,7 +13,6 @@
 #include "Collision.h"
 #include "CommandQueue.h"
 #include "ResourceHolder.h"
-
 #include <fstream>
 #include "Json.h"
 

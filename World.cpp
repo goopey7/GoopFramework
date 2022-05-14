@@ -173,22 +173,25 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 			for(json object : layer["objects"])
 			{
 				sf::FloatRect rect = sf::FloatRect(object["x"],object["y"],object["width"],object["height"]);
-				if(object["properties"].at(0)["value"] == "block")
+				if(object["properties"].at(0)["name"] == "colType")
 				{
-					std::unique_ptr<Actor> colBox(new Actor(textures,this));
-					colBox->setPosition(0.f,0.f);
-					colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
-					colBox->enableCollision(true);
-					addNode(&colBox,Object);
-				}
-				else if(object["properties"].at(0)["value"] == "enemyTurn")
-				{
-					std::unique_ptr<Actor> colBox(new Actor(textures,this));
-					colBox->setPosition(0.f,0.f);
-					colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
-					colBox->enableCollision(true);
-					colBox->setCategory(Category::EnemyBlock | Category::Actor);
-					addNode(&colBox,Object);
+					if(object["properties"].at(0)["value"] == "block")
+					{
+						std::unique_ptr<Actor> colBox(new Actor(textures,this));
+						colBox->setPosition(0.f,0.f);
+						colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
+						colBox->enableCollision(true);
+						addNode(&colBox,Object);
+					}
+					else if(object["properties"].at(0)["value"] == "enemyTurn")
+					{
+						std::unique_ptr<Actor> colBox(new Actor(textures,this));
+						colBox->setPosition(0.f,0.f);
+						colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
+						colBox->enableCollision(true);
+						colBox->setCategory(Category::EnemyBlock | Category::Actor);
+						addNode(&colBox,Object);
+					}
 				}
 			}
 		}
