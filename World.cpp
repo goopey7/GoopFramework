@@ -45,6 +45,35 @@ void World::fixedUpdate(const float dt)
 		}
 	}
 
+	// check dynamic vs dynamic collisions
+	for(int i=0;i<dynamicCollidingActors.size();i++)
+	{
+		Actor* a1 = dynamicCollidingActors[i];
+		if(!a1->isDynamic())
+		{
+			dynamicCollidingActors.erase(dynamicCollidingActors.begin() + i);
+		}
+		else
+		{
+			for(int j=i+1;j<dynamicCollidingActors.size();j++)
+			{
+				Actor* a2 = dynamicCollidingActors[j];
+				if(!a2->isDynamic())
+				{
+					dynamicCollidingActors.erase(dynamicCollidingActors.begin() + j);
+				}
+				else
+				{
+					if(Collision::ActorVActor(a1,a2))
+					{
+						a1->onDynamicVsDynamicEnter(a2);
+						a2->onDynamicVsDynamicEnter(a1);
+					}
+				}
+			}
+		}
+	}
+
 	worldGraph.fixedUpdate(dt);
 }
 

@@ -46,6 +46,9 @@ class World : private sf::NonCopyable
 		template <typename NodeChild>
 		void addNode(std::unique_ptr<NodeChild>* node, Layer layer);
 
+		template <typename NodeChild>
+		void delNode(std::unique_ptr<NodeChild>* node, Layer layer);
+
 		void loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures);
 
 		sf::RenderWindow* getWindow();
@@ -87,5 +90,23 @@ void World::addNode(std::unique_ptr<NodeChild>* node, Layer layer)
 		}
 	}
 	worldLayers[layer]->attachChild(std::move(*node));
+}
+
+template <typename NodeChild>
+void World::delNode(std::unique_ptr<NodeChild>* node, Layer layer)
+{
+	Actor* a = reinterpret_cast<Actor*>(node->get());
+	if(a != nullptr)
+	{
+		if(a->isDynamic())
+		{
+			dynamicCollidingActors.erase(node);
+		}
+		else if(a->collisionEnabled())
+		{
+			collidingActors.erase(node);
+		}
+	}
+	worldLayers[layer]->detachChild(*node);
 }
 

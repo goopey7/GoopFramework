@@ -13,6 +13,8 @@ namespace Category
 		Scene = 1 << 0,
 		PlayerCharacter = 1 << 1,
 		Actor = 1 << 2,
+		Enemy = 1 << 3,
+		Shuriken = 1 << 4,
 	};
 }
 // so for example

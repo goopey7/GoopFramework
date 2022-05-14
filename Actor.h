@@ -32,7 +32,7 @@ class Actor : public Node
 		void scale(sf::Vector2f scaleFactor);
 		void scale(float scaleX, float scaleY);
 		void updateBox();
-		bool isDynamic();
+		bool isDynamic() const;
 		void setIsDynamic(bool isDynamic);
 		bool collisionEnabled();
 		void enableCollision(bool shouldCollide);
@@ -41,6 +41,10 @@ class Actor : public Node
 		World* getWorld();
 
 		virtual void onCollisionEnter(Actor* other, sf::Vector2f& contactPoint, sf::Vector2f& contactNormal, float& hitTime, const float dt);
+		virtual void onDynamicVsDynamicEnter(Actor* other);
+
+		void applyDamage(float damage);
+		float getDamage();
 
 	protected:
 		sf::Sprite sprite;
@@ -58,5 +62,8 @@ class Actor : public Node
 		bool bIsDynamic=false;
 
 		World* currentWorld;
+
+		float health = 100.f;
+		float damage = 10.f;
 };
 

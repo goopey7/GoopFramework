@@ -109,7 +109,7 @@ void Actor::setVelocity(sf::Vector2f vel)
 	velocity = vel;
 }
 
-bool Actor::isDynamic()
+bool Actor::isDynamic() const
 {
 	return bIsDynamic;
 }
@@ -141,5 +141,19 @@ World* Actor::getWorld()
 const TextureHolder& Actor::getTextures() const
 {
 	return textures;
+}
+
+void Actor::applyDamage(float damage)
+{
+	health -= damage;
+}
+
+float Actor::getDamage()
+{
+	return damage;
+}
+
+void Actor::onDynamicVsDynamicEnter(Actor* other)
+{
 }
 
