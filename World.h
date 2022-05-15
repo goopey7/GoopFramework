@@ -58,7 +58,7 @@ class World : private sf::NonCopyable
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
 		float viewScale = 0.15f;
-		std::unique_ptr<World>* currentWorld;
+		std::unique_ptr<World>* currentWorld = nullptr;
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements

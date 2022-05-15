@@ -16,7 +16,9 @@ namespace Category
 		Enemy = 1 << 3,
 		Shuriken = 1 << 4,
 		EnemyBlock = 1 << 5,
-		EnemyProjectile = 1 << 6,
+		Bullet = 1 << 6,
+		MenuPlayer = 1 << 7,
+		OriginTP = 1 << 8,
 	};
 }
 // so for example

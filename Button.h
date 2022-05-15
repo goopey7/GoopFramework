@@ -18,6 +18,7 @@ class Button : public sf::Drawable
 		bool isReleased();
 		bool isReleased(sf::Color fillColor);
 		void setFillColor(sf::Color fillColor);
+		void setPosition(sf::Vector2f pos);
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override final;
 
 	private:

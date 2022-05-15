@@ -5,8 +5,8 @@
 Button::Button(sf::RenderWindow& window, sf::Vector2f topLeft, sf::Vector2f size, sf::Font& font, std::string textStr)
 	: window(&window), font(font)
 {
-	box.setPosition(topLeft);
 	box.setSize(size);
+	box.setPosition(topLeft);
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Green);
 	box.setOutlineThickness(1.f);
@@ -102,5 +102,11 @@ bool Button::isReleased(sf::Color fillColor)
 void Button::setFillColor(sf::Color fillColor)
 {
 	box.setFillColor(fillColor);
+}
+
+void Button::setPosition(sf::Vector2f pos)
+{
+	box.setPosition(pos-Vector<float>::divide(box.getSize(),2.f));
+	text.setPosition(box.getPosition() + Vector<float>::divide(box.getSize(),2.f));
 }
 
