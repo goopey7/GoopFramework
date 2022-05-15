@@ -94,7 +94,8 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 
 	// TODO CLEAN THIS AWFULNESS UP
 	TextureHolder t;
-	Actor expandedBox(t,nullptr);
+	Player s;
+	Actor expandedBox(s,t,nullptr);
 	expandedBox.setCollisionBox(expandedRect);
 	expandedBox.setPosition(0.f,0.f);
 	// -------------------------------
@@ -110,20 +111,28 @@ bool Collision::MovingActorVActor(const Actor* mA, const Actor* sA, sf::Vector2f
 
 void Collision::ResolveDynamicVStatic(Actor* dA, Actor* sA, const float dt)
 {
-	if(dA == nullptr || sA == nullptr)
-		return;
-	bool canCollide = (!(dA->getCategory() & Category::Enemy) && !(sA->getCategory() & Category::EnemyBlock))
-				|| (dA->getCategory() & Category::Enemy);
-	if(!canCollide)
-		return;
-	sf::Vector2f cp,cn;
-	float ct = 0.f;
-	if(Collision::MovingActorVActor(dA,sA,cp,cn,ct,dt))
+	try
 	{
-		sf::Vector2f vel = dA->getVelocity();
-		sf::Vector2f newVel = Vector<float>::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
-		dA->setVelocity(vel + newVel);
-		dA->onCollisionEnter(sA,cp,cn,ct,dt);
+		if(dA == nullptr || sA == nullptr)
+			return;
+
+		bool canCollide = (!(dA->getCategory() & Category::Enemy) && !(sA->getCategory() & Category::EnemyBlock))
+					|| (dA->getCategory() & Category::Enemy);
+		if(!canCollide)
+			return;
+		sf::Vector2f cp,cn;
+		float ct = 0.f;
+		if(Collision::MovingActorVActor(dA,sA,cp,cn,ct,dt))
+		{
+			sf::Vector2f vel = dA->getVelocity();
+			sf::Vector2f newVel = Vector<float>::multiply(cn,sf::Vector2f(std::abs(vel.x),std::abs(vel.y))) * (1-ct);
+			dA->setVelocity(vel + newVel);
+			dA->onCollisionEnter(sA,cp,cn,ct,dt);
+		}
+	}
+	catch(...)
+	{
+		std::cout << "WEIRDNESS\n";
 	}
 }
 

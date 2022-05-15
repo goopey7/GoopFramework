@@ -2,8 +2,8 @@
 
 #include "Actor.h"
 
-Actor::Actor(const TextureHolder& textures, World* currentWorld)
-	: textures(textures), currentWorld(currentWorld)
+Actor::Actor(Player& sounds, const TextureHolder& textures, World* currentWorld)
+	: sfx(sounds),textures(textures), currentWorld(currentWorld)
 {
 	box.setFillColor(sf::Color::Transparent);
 	box.setOutlineColor(sf::Color::Red);
@@ -160,5 +160,10 @@ void Actor::onDynamicVsDynamicEnter(Actor* other)
 void Actor::setCategory(unsigned int category)
 {
 	this->category = category;
+}
+
+Player& Actor::getSfx()
+{
+	return sfx;
 }
 

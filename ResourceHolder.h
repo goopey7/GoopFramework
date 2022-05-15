@@ -19,6 +19,7 @@ template <typename Resource, typename Identifier>
 class ResourceHolder
 {
 	public:
+		void add(Identifier id, std::unique_ptr<Resource> resource);
 		void load(Identifier id, const std::string &fileName);
 
 		// overload get so it can be used in a const/read-only context
@@ -39,9 +40,8 @@ namespace sf
 	class Texture;
 	class Font;
 	class SoundBuffer;
+	class Sound;
 };
-
-
 
 template<typename Resource, typename Identifier>
 void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string &fileName)
@@ -69,5 +69,11 @@ Resource& ResourceHolder<Resource, Identifier>::get(Identifier id)
 {
 	auto found = resourceMap.find(id);
 	return *found->second;
+}
+
+template<typename Resource, typename Identifier>
+void ResourceHolder<Resource, Identifier>::add(Identifier id, std::unique_ptr<Resource> resource)
+{
+	resourceMap[id] = std::move(resource);
 }
 

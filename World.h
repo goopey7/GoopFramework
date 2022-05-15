@@ -15,6 +15,7 @@
 #include "ResourceHolder.h"
 #include <fstream>
 #include "Json.h"
+#include <SFML/Audio.hpp>
 
 class World : private sf::NonCopyable
 {
@@ -48,17 +49,20 @@ class World : private sf::NonCopyable
 		template <typename NodeChild>
 		void delNode(std::unique_ptr<NodeChild>* node, Layer layer);
 
-		void loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures);
+		void loadFromFile(const char* fileName, Player& sfx,TextureHolder& textures, unsigned int numTextures);
 
 		sf::RenderWindow* getWindow();
 
 		float getViewScale();
+
+		void changeWorld(World* newWorld);
 
 	protected:
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
 		float viewScale = 0.15f;
 		std::unique_ptr<World>* currentWorld = nullptr;
+		sf::Music song;
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements

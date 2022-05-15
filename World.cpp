@@ -117,7 +117,7 @@ CommandQueue& World::getCommandQueue()
 	return commandQueue;
 }
 
-void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned int numTextures)
+void World::loadFromFile(const char* fileName, Player& sfx,TextureHolder& textures, unsigned int numTextures)
 {
 	using nlohmann::json;
 	std::ifstream file(fileName);
@@ -155,7 +155,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 				{
 					if(layout[i] != 0)
 					{
-						std::unique_ptr<Actor> tile(new Actor(textures,this));
+						std::unique_ptr<Actor> tile(new Actor(sfx,textures,this));
 						tile->setTexture(textureID-1);
 						tile->setPosition(x*tileWidth,y*tileHeight);
 						sf::IntRect texRect = sf::IntRect(
@@ -177,7 +177,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 				{
 					if(object["properties"].at(0)["value"] == "block")
 					{
-						std::unique_ptr<Actor> colBox(new Actor(textures,this));
+						std::unique_ptr<Actor> colBox(new Actor(sfx,textures,this));
 						colBox->setPosition(0.f,0.f);
 						colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
 						colBox->enableCollision(true);
@@ -185,7 +185,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 					}
 					else if(object["properties"].at(0)["value"] == "enemyTurn")
 					{
-						std::unique_ptr<Actor> colBox(new Actor(textures,this));
+						std::unique_ptr<Actor> colBox(new Actor(sfx,textures,this));
 						colBox->setPosition(0.f,0.f);
 						colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
 						colBox->enableCollision(true);
@@ -194,7 +194,7 @@ void World::loadFromFile(const char* fileName, TextureHolder& textures, unsigned
 					}
 					else if(object["properties"].at(0)["value"] == "originTP")
 					{
-						std::unique_ptr<Actor> colBox(new Actor(textures,this));
+						std::unique_ptr<Actor> colBox(new Actor(sfx,textures,this));
 						colBox->setPosition(0.f,0.f);
 						colBox->setCollisionBox(sf::FloatRect(rect.left,rect.top,rect.width,rect.height));
 						colBox->enableCollision(true);
@@ -219,5 +219,12 @@ float World::getViewScale()
 
 void World::loadResources()
 {
+}
+
+void World::changeWorld(World* newWorld)
+{
+	song.stop();
+	currentWorld->reset(newWorld);
+	//delete this;
 }
 

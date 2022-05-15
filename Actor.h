@@ -4,15 +4,17 @@
 #include "ResourceHolder.h"
 #include "Node.h"
 #include "CollisionHelpers.h"
+#include <SFML/Audio.hpp>
 
 typedef ResourceHolder<sf::Texture,unsigned int> TextureHolder;
+typedef ResourceHolder<sf::Sound,unsigned int> Player;
 
 class World;
 
 class Actor : public Node
 {
 	public:
-		Actor(const TextureHolder& textures, World* currentWorld);
+		Actor(Player& sounds, const TextureHolder& textures, World* currentWorld);
 		~Actor();
 
 		virtual void updateCurrent(const float dt) override;
@@ -38,6 +40,7 @@ class Actor : public Node
 		bool collisionEnabled();
 		void enableCollision(bool shouldCollide);
 		const TextureHolder& getTextures() const;
+		Player& getSfx();
 
 		World* getWorld();
 
@@ -50,6 +53,7 @@ class Actor : public Node
 	protected:
 		sf::Sprite sprite;
 		const TextureHolder& textures;
+		Player& sfx;
 
 		sf::FloatRect collisionBox;
 
