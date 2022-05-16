@@ -19,6 +19,8 @@ namespace Category
 		Bullet = 1 << 6,
 		MenuPlayer = 1 << 7,
 		OriginTP = 1 << 8,
+		Pickup = 1 << 9,
+		WinPickup = 1 << 10,
 	};
 }
 // so for example

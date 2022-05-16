@@ -86,6 +86,10 @@ void World::fixedUpdate(const float dt)
 			{
 				bGameOver = true;
 			}
+			else if(dynamicCollidingActors[i]->getCategory() & Category::WinPickup)
+			{
+				bComplete = true;
+			}
 			dynamicCollidingActors.erase(dynamicCollidingActors.begin() + i);
 		}
 	}
