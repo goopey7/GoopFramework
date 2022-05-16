@@ -41,6 +41,7 @@ void Text::updatePosFromAnchor()
 		case BottomLeft:
 			{
 				bL = window->mapPixelToCoords(sf::Vector2i(0,window->getSize().y));
+				bL += sf::Vector2f(5.f,-5.f);
 				text.setOrigin(0.f,text.getGlobalBounds().height);
 				text.setPosition(bL);
 			}
@@ -48,6 +49,7 @@ void Text::updatePosFromAnchor()
 		case BottomRight:
 			{
 				bR = window->mapPixelToCoords(sf::Vector2i(window->getSize()));
+				bR -= sf::Vector2f(5.f,5.f);
 				text.setOrigin(text.getGlobalBounds().width,text.getGlobalBounds().height);
 				text.setPosition(bR);
 			}
@@ -55,6 +57,7 @@ void Text::updatePosFromAnchor()
 		case TopLeft:
 			{
 				tL = window->mapPixelToCoords(sf::Vector2i(0,0));
+				tL += sf::Vector2f(5.f,5.f);
 				text.setOrigin(0.f,0.f);
 				text.setPosition(tL);
 			}
@@ -62,6 +65,7 @@ void Text::updatePosFromAnchor()
 		case TopRight:
 			{
 				tR = window->mapPixelToCoords(sf::Vector2i(window->getSize().x,0));
+				tR += sf::Vector2f(-5.f,5.f);
 				text.setOrigin(text.getGlobalBounds().width,0.f);
 				text.setPosition(tR);
 			}
