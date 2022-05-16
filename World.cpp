@@ -82,6 +82,10 @@ void World::fixedUpdate(const float dt)
 	{
 		if(dynamicCollidingActors[i]->shouldDie())
 		{
+			if(dynamicCollidingActors[i]->getCategory() & Category::PlayerCharacter)
+			{
+				bGameOver = true;
+			}
 			dynamicCollidingActors.erase(dynamicCollidingActors.begin() + i);
 		}
 	}
@@ -226,5 +230,15 @@ void World::changeWorld(World* newWorld)
 	song.stop();
 	currentWorld->reset(newWorld);
 	//delete this;
+}
+
+bool World::gameOver() const
+{
+	return bGameOver;
+}
+
+bool World::complete() const
+{
+	return bComplete;
 }
 

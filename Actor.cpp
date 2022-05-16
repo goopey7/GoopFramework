@@ -148,7 +148,7 @@ void Actor::applyDamage(float damage)
 	health -= damage;
 }
 
-float Actor::getDamage()
+float Actor::getDamage() const
 {
 	return damage;
 }
@@ -165,5 +165,10 @@ void Actor::setCategory(unsigned int category)
 Player& Actor::getSfx()
 {
 	return sfx;
+}
+
+float Actor::getHealth() const
+{
+	return health;
 }
 

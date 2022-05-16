@@ -57,12 +57,18 @@ class World : private sf::NonCopyable
 
 		void changeWorld(World* newWorld);
 
+		bool gameOver() const;
+		bool complete() const;
+
 	protected:
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
 		float viewScale = 0.15f;
 		std::unique_ptr<World>* currentWorld = nullptr;
 		sf::Music song;
+
+		bool bGameOver = false;
+		bool bComplete = false;
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements

@@ -48,7 +48,8 @@ class Actor : public Node
 		virtual void onDynamicVsDynamicEnter(Actor* other);
 
 		void applyDamage(float damage);
-		float getDamage();
+		float getDamage() const;
+		float getHealth() const;
 
 	protected:
 		sf::Sprite sprite;
