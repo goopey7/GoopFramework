@@ -110,3 +110,10 @@ void Button::setPosition(sf::Vector2f pos)
 	text.setPosition(box.getPosition() + Vector<float>::divide(box.getSize(),2.f));
 }
 
+void Button::setText(std::string text)
+{
+	this->text.setString(text);
+	this->text.setOrigin(this->text.getGlobalBounds().width/2.f,this->text.getGlobalBounds().height/2.f);
+	this->text.setPosition(box.getPosition() + Vector<float>::divide(box.getSize(),2.f));
+}
+
