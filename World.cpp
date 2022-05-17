@@ -249,3 +249,8 @@ bool World::complete() const
 	return bComplete;
 }
 
+int World::getID() const
+{
+	return id;
+}
+
