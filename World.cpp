@@ -130,6 +130,9 @@ void World::loadFromFile(const char* fileName, Player& sfx,TextureHolder& textur
 	using nlohmann::json;
 	std::ifstream file(fileName);
 	json map = json::parse(file);
+	json levelProperties = map["properties"][0];
+	id = levelProperties["value"];
+	std::cout << "READ ID: " << id << std::endl;
 	json layers = map["layers"];
 	std::map<std::string,int> tileSets;
 	for(int i=0; i<map["tilesets"].size();i++)

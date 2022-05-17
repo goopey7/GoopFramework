@@ -60,6 +60,8 @@ class World : private sf::NonCopyable
 		bool gameOver() const;
 		bool complete() const;
 
+		int getID() const;
+
 	protected:
 		sf::Vector2f spawnPos;
 		sf::RenderWindow& window;
@@ -69,6 +71,7 @@ class World : private sf::NonCopyable
 
 		bool bGameOver = false;
 		bool bComplete = false;
+
 
 	private:
 		// std::array behaves like a C array except it doesn't implicitly evaluate elements
@@ -80,6 +83,7 @@ class World : private sf::NonCopyable
 		std::vector<Actor*> dynamicCollidingActors;
 		CommandQueue commandQueue;
 
+		int id = -1;
 };
 
 // collision should only be enabled if the node being passed in is an actor
