@@ -22,6 +22,7 @@ class Text : public sf::Drawable
 		void anchorTo(Anchor anchor);
 		void updatePosFromAnchor();
 		void setPosition(sf::Vector2f pos);
+		void setFontSize(unsigned int size);
 
 	protected:
 

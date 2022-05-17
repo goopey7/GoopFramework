@@ -72,7 +72,7 @@ void Text::updatePosFromAnchor()
 			break;
 		case Center:
 			{
-				c = window->mapPixelToCoords(sf::Vector2i(Vector<unsigned int>::divide(window->getSize(),2)));
+				c = window->mapPixelToCoords(sf::Vector2i(window->getSize().x/2,window->getSize().y/2));
 				text.setOrigin(text.getGlobalBounds().width/2.f,text.getGlobalBounds().height/2.f);
 				text.setPosition(c);
 			}
@@ -83,5 +83,10 @@ void Text::updatePosFromAnchor()
 void Text::setPosition(sf::Vector2f pos)
 {
 	text.setPosition(pos);
+}
+
+void Text::setFontSize(unsigned int size)
+{
+	text.setCharacterSize(size);
 }
 
